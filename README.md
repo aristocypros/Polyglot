@@ -97,7 +97,7 @@ sequenceDiagram
     Signer->>DB: Step 5: Check signer.results, INSERT (request_id, nonce) INTO signer.replay
     Note over Signer: Steps 6–7: Validate path(s), decode raw tx with Chain Codec & compute sighash
     Note over Signer: Step 8: Build AEAD AAD from verified body (wallet_id|scheme|curve|v|kek)
-    Signer->>HSM: C_Decrypt (CKM_AES_GCM) wrapped_seed with AAD -> Zeroizing<[u8; 64]>
+    Signer->>HSM: C_Decrypt (CKM_AES_GCM) wrapped_seed with AAD -> 64-byte seed in Zeroizing buffer
     Note over Signer: Derive child key (BIP32 secp256k1 or SLIP10 ed25519) in Zeroizing buffer
     Signer->>HSM: Step 9: C_CreateObject (ephemeral session key) -> C_Sign -> C_DestroyObject
     Note over Signer: Normalize low-S / RecID / DER, wipe buffers, sign response with Signer Ed25519 key
