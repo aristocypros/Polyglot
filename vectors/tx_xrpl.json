@@ -1,0 +1,163 @@
+[
+  {
+    "chain": "xrpl:0",
+    "description": "Native XRP Payment of 25 XRP (25000000 drops) on XRPL Mainnet",
+    "id": "xrpl_mainnet_native_xrp_payment",
+    "parsed": {
+      "details": {
+        "account": "rKtXXTVno77jhu6tto1MAXjepyuaKaLcqB",
+        "amount_drops": 25000000,
+        "chain": "xrpl:0",
+        "destination": "rPT1Sjq2YGrBMTttX4GZHjKu9dyfzbpAYe",
+        "fee_drops": 12,
+        "flags": 2147483648,
+        "sequence": 1,
+        "transaction_type": "Payment"
+      },
+      "fee": {
+        "amount": "12",
+        "asset": "drops"
+      },
+      "sequence": {
+        "sequence": 1
+      },
+      "transfers": [
+        {
+          "amount": "25000000",
+          "asset": "XRP",
+          "from": "rKtXXTVno77jhu6tto1MAXjepyuaKaLcqB",
+          "to": "rPT1Sjq2YGrBMTttX4GZHjKu9dyfzbpAYe"
+        }
+      ]
+    },
+    "path": "m/44'/144'/0'/0/0",
+    "public_key": "0x0246d1967bc7393244b4f1a376ea290dd6d64a0d9c726c17d48f08cdd68f170aa2",
+    "raw_tx": "0x120000228000000024000000016140000000017d784068400000000000000c73210246d1967bc7393244b4f1a376ea290dd6d64a0d9c726c17d48f08cdd68f170aa28114cf30f590d7a9067b2604d80d46090fbf342ebe988314f667b0ca50cc7709a220b0561b85e53a48461fa8",
+    "result": {
+      "r": "0xd9cc51826abe6c79986ba423c3b59187683a74bf5f209029570d05dc7d716c4f",
+      "s": "0x7de389d9676aa973590fc6d66727ee012ead35850a088f6da20c4a5f6f113d36",
+      "signature_hex": "3045022100d9cc51826abe6c79986ba423c3b59187683a74bf5f209029570d05dc7d716c4f02207de389d9676aa973590fc6d66727ee012ead35850a088f6da20c4a5f6f113d36",
+      "signer_address": "rKtXXTVno77jhu6tto1MAXjepyuaKaLcqB"
+    },
+    "signer_address": "rKtXXTVno77jhu6tto1MAXjepyuaKaLcqB",
+    "signing_input": "0x88bcde2f7448ff4dc3ecded389cd2564eaa8dba04cc50bf6460b2e3bab456ba7"
+  },
+  {
+    "chain": "xrpl:0",
+    "description": "Issued currency Payment of 100 USD with destination tag",
+    "id": "xrpl_mainnet_issued_currency_payment",
+    "parsed": {
+      "details": {
+        "account": "rKtXXTVno77jhu6tto1MAXjepyuaKaLcqB",
+        "amount": "100",
+        "chain": "xrpl:0",
+        "currency": "USD",
+        "destination": "rPT1Sjq2YGrBMTttX4GZHjKu9dyfzbpAYe",
+        "destination_tag": 10001,
+        "fee_drops": 15,
+        "flags": 2147483648,
+        "issuer": "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
+        "sequence": 2,
+        "transaction_type": "Payment"
+      },
+      "fee": {
+        "amount": "15",
+        "asset": "drops"
+      },
+      "sequence": {
+        "sequence": 2
+      },
+      "transfers": [
+        {
+          "amount": "100",
+          "asset": "USD",
+          "from": "rKtXXTVno77jhu6tto1MAXjepyuaKaLcqB",
+          "to": "rPT1Sjq2YGrBMTttX4GZHjKu9dyfzbpAYe"
+        }
+      ]
+    },
+    "path": "m/44'/144'/0'/0/0",
+    "public_key": "0x0246d1967bc7393244b4f1a376ea290dd6d64a0d9c726c17d48f08cdd68f170aa2",
+    "raw_tx": "0x120000228000000024000000022e0000271161d5038d7ea4c6800000000000000000000000000055534400000000004b4e9c06f24296074f7bc48f92a97916c6dc5ea968400000000000000f73210246d1967bc7393244b4f1a376ea290dd6d64a0d9c726c17d48f08cdd68f170aa28114cf30f590d7a9067b2604d80d46090fbf342ebe988314f667b0ca50cc7709a220b0561b85e53a48461fa8",
+    "result": {
+      "r": "0x8a5aa625e4248da2ae2d917974660c6974bebbbbc45d4327013ef622477ac61a",
+      "s": "0x67a567453e8d14167f313b3e7f1f219851365c0ce0988badf93b8d5e286e16df",
+      "signature_hex": "30450221008a5aa625e4248da2ae2d917974660c6974bebbbbc45d4327013ef622477ac61a022067a567453e8d14167f313b3e7f1f219851365c0ce0988badf93b8d5e286e16df",
+      "signer_address": "rKtXXTVno77jhu6tto1MAXjepyuaKaLcqB"
+    },
+    "signer_address": "rKtXXTVno77jhu6tto1MAXjepyuaKaLcqB",
+    "signing_input": "0xc9e01b4926b2778d92dc155ea3636663ab8ef4927ee72a8d4d8e6dd702d91e02"
+  },
+  {
+    "chain": "xrpl:0",
+    "description": "Native XRP Payment of 5 XRP with destination and source tags",
+    "id": "xrpl_payment_with_destination_and_source_tags",
+    "parsed": {
+      "details": {
+        "account": "rKtXXTVno77jhu6tto1MAXjepyuaKaLcqB",
+        "amount_drops": 5000000,
+        "chain": "xrpl:0",
+        "destination": "rPT1Sjq2YGrBMTttX4GZHjKu9dyfzbpAYe",
+        "destination_tag": 98765,
+        "fee_drops": 10,
+        "flags": 2147483648,
+        "sequence": 3,
+        "source_tag": 12345,
+        "transaction_type": "Payment"
+      },
+      "fee": {
+        "amount": "10",
+        "asset": "drops"
+      },
+      "sequence": {
+        "sequence": 3
+      },
+      "transfers": [
+        {
+          "amount": "5000000",
+          "asset": "XRP",
+          "from": "rKtXXTVno77jhu6tto1MAXjepyuaKaLcqB",
+          "to": "rPT1Sjq2YGrBMTttX4GZHjKu9dyfzbpAYe"
+        }
+      ]
+    },
+    "path": "m/44'/144'/0'/0/0",
+    "public_key": "0x0246d1967bc7393244b4f1a376ea290dd6d64a0d9c726c17d48f08cdd68f170aa2",
+    "raw_tx": "0x1200002280000000230000303924000000032e000181cd6140000000004c4b4068400000000000000a73210246d1967bc7393244b4f1a376ea290dd6d64a0d9c726c17d48f08cdd68f170aa28114cf30f590d7a9067b2604d80d46090fbf342ebe988314f667b0ca50cc7709a220b0561b85e53a48461fa8",
+    "result": {
+      "r": "0xc162d2198185e4b59747c768c17bc92ff1344be20a4e388f87c4d11190ebe2cd",
+      "s": "0x38655ad424b6413cf925ae9bff6c46fba0dcdb91b433e827455f8d3a179a9a92",
+      "signature_hex": "3045022100c162d2198185e4b59747c768c17bc92ff1344be20a4e388f87c4d11190ebe2cd022038655ad424b6413cf925ae9bff6c46fba0dcdb91b433e827455f8d3a179a9a92",
+      "signer_address": "rKtXXTVno77jhu6tto1MAXjepyuaKaLcqB"
+    },
+    "signer_address": "rKtXXTVno77jhu6tto1MAXjepyuaKaLcqB",
+    "signing_input": "0x2c3a6f0647701ce26dc795271979611dd83d236fb5ec6b648f267bd7554a8106"
+  },
+  {
+    "chain": "xrpl:0",
+    "description": "Rejection of non-Payment XRPL transaction (AccountSet = 3)",
+    "expected_error": "unsupported_transaction",
+    "id": "xrpl_rejection_unsupported_transaction_type",
+    "path": "m/44'/144'/0'/0/0",
+    "public_key": "0x0246d1967bc7393244b4f1a376ea290dd6d64a0d9c726c17d48f08cdd68f170aa2",
+    "raw_tx": "0x120003228000000024000000016140000000000003e868400000000000000c73210246d1967bc7393244b4f1a376ea290dd6d64a0d9c726c17d48f08cdd68f170aa28114cf30f590d7a9067b2604d80d46090fbf342ebe988314f667b0ca50cc7709a220b0561b85e53a48461fa8"
+  },
+  {
+    "chain": "xrpl:0",
+    "description": "Rejection of multi-signed XRPL transaction containing Signers field",
+    "expected_error": "unsupported_transaction",
+    "id": "xrpl_rejection_multi_signed_transaction",
+    "path": "m/44'/144'/0'/0/0",
+    "public_key": "0x0246d1967bc7393244b4f1a376ea290dd6d64a0d9c726c17d48f08cdd68f170aa2",
+    "raw_tx": "0x120000228000000024000000016140000000000003e868400000000000000c73210246d1967bc7393244b4f1a376ea290dd6d64a0d9c726c17d48f08cdd68f170aa28114cf30f590d7a9067b2604d80d46090fbf342ebe988314f667b0ca50cc7709a220b0561b85e53a48461fa8f3f1"
+  },
+  {
+    "chain": "xrpl:0",
+    "description": "Rejection of transaction when SigningPubKey does not match derived signer key",
+    "expected_error": "unsupported_transaction",
+    "id": "xrpl_rejection_mismatched_signing_pub_key",
+    "path": "m/44'/144'/0'/0/0",
+    "public_key": "0x0246d1967bc7393244b4f1a376ea290dd6d64a0d9c726c17d48f08cdd68f170aa2",
+    "raw_tx": "0x120000228000000024000000016140000000000003e868400000000000000c73210330e7fc9d56bb25d6893ba3f317ae5bcf33b3291bd63db32654a313222f7fd0208114cf30f590d7a9067b2604d80d46090fbf342ebe988314f667b0ca50cc7709a220b0561b85e53a48461fa8"
+  }
+]

@@ -1,0 +1,206 @@
+[
+  {
+    "chain": "eip155:1",
+    "description": "EIP-1559 Type 2 native ETH transfer on Ethereum Mainnet",
+    "id": "eip1559_native_transfer",
+    "parsed": {
+      "details": {
+        "access_list": [],
+        "chain_id": 1,
+        "gas_limit": 21000,
+        "max_fee_per_gas": "20000000000",
+        "max_priority_fee_per_gas": "1000000000",
+        "type": 2
+      },
+      "fee": {
+        "amount": "420000000000000",
+        "asset": "wei"
+      },
+      "sequence": {
+        "nonce": 5
+      },
+      "transfers": [
+        {
+          "amount": "1000000000000000000",
+          "asset": "ETH",
+          "from": "0x022b971dFF0C43305e691DEd7a14367AF19D6407",
+          "to": "0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359"
+        }
+      ]
+    },
+    "path": "m/44'/60'/0'/0/0",
+    "public_key": "0x03844a5d329470697de9926c9c98839ea33b6dd9507a896194ae2b91d71faa16d6",
+    "raw_tx": "0x02f00105843b9aca008504a817c80082520894fb6916095ca1df60bb79ce92ce3ea74c37c5d359880de0b6b3a764000080c0",
+    "result": {
+      "r": "0xf31abf7c734ff17009e0d6fa0483f397ab2df0727990886aab88d0ae7d1112b1",
+      "s": "0x0124966632aa9010a3909d57e6232674d5df021947d88406623b1db253f957c4",
+      "signer_address": "0x022b971dFF0C43305e691DEd7a14367AF19D6407",
+      "v": 1,
+      "y_parity": 1
+    },
+    "signer_address": "0x022b971dFF0C43305e691DEd7a14367AF19D6407",
+    "signing_input": "0x32cf35379ea8b6c5198718754f9a9b6e5b9d3b398e876b9798d121cf62eed29d"
+  },
+  {
+    "chain": "eip155:137",
+    "description": "EIP-1559 Type 2 ERC-20 transfer of 500 USDC on Polygon",
+    "id": "eip1559_erc20_transfer",
+    "parsed": {
+      "details": {
+        "access_list": [],
+        "chain_id": 137,
+        "gas_limit": 65000,
+        "max_fee_per_gas": "50000000000",
+        "max_priority_fee_per_gas": "30000000000",
+        "type": 2
+      },
+      "fee": {
+        "amount": "3250000000000000",
+        "asset": "wei"
+      },
+      "sequence": {
+        "nonce": 12
+      },
+      "transfers": [
+        {
+          "amount": "500000000",
+          "asset": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+          "from": "0x022b971dFF0C43305e691DEd7a14367AF19D6407",
+          "to": "0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359"
+        }
+      ]
+    },
+    "path": "m/44'/60'/0'/0/0",
+    "public_key": "0x03844a5d329470697de9926c9c98839ea33b6dd9507a896194ae2b91d71faa16d6",
+    "raw_tx": "0x02f86f81890c8506fc23ac00850ba43b740082fde8942791bca1f2de4661ed88a30c99a7a9449aa8417480b844a9059cbb000000000000000000000000fb6916095ca1df60bb79ce92ce3ea74c37c5d359000000000000000000000000000000000000000000000000000000001dcd6500c0",
+    "result": {
+      "r": "0xa48e3ee577cfe667edae0cf0e73b83ceb111941fa59e31d4f35627afb0622776",
+      "s": "0x03bc0a7f4fc56b2eb756bf6281c74e71f87f0d30761c6f433ccbdb8f28887fb4",
+      "signer_address": "0x022b971dFF0C43305e691DEd7a14367AF19D6407",
+      "v": 1,
+      "y_parity": 1
+    },
+    "signer_address": "0x022b971dFF0C43305e691DEd7a14367AF19D6407",
+    "signing_input": "0x66f5daf3c15f9e8a7ad1ec2fcf15514a28d9330b25ae1ac27dff8c5ed0c443ab"
+  },
+  {
+    "chain": "eip155:1",
+    "description": "Legacy EIP-155 native ETH transfer of 0.5 ETH on Ethereum Mainnet",
+    "id": "legacy_eip155_native_transfer",
+    "parsed": {
+      "details": {
+        "chain_id": 1,
+        "gas_limit": 21000,
+        "gas_price": "15000000000",
+        "type": 0
+      },
+      "fee": {
+        "amount": "315000000000000",
+        "asset": "wei"
+      },
+      "sequence": {
+        "nonce": 3
+      },
+      "transfers": [
+        {
+          "amount": "500000000000000000",
+          "asset": "ETH",
+          "from": "0x022b971dFF0C43305e691DEd7a14367AF19D6407",
+          "to": "0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359"
+        }
+      ]
+    },
+    "path": "m/44'/60'/0'/0/0",
+    "public_key": "0x03844a5d329470697de9926c9c98839ea33b6dd9507a896194ae2b91d71faa16d6",
+    "raw_tx": "0xec0385037e11d60082520894fb6916095ca1df60bb79ce92ce3ea74c37c5d3598806f05b59d3b2000080018080",
+    "result": {
+      "r": "0x6b09df08ddf315b3ba8fec88c1305a06073e380c43702d18eef83da216206c3d",
+      "s": "0x692594c71dc90203e9512c978b2ac9569ecd7db2d86f731bf62f129496266da9",
+      "signer_address": "0x022b971dFF0C43305e691DEd7a14367AF19D6407",
+      "v": 38,
+      "y_parity": 1
+    },
+    "signer_address": "0x022b971dFF0C43305e691DEd7a14367AF19D6407",
+    "signing_input": "0xfdca3ae4de1ac141bd2e6ff4ff63f4c94763e266be9b5905856740c8eb3ab9b6"
+  },
+  {
+    "chain": "eip155:56",
+    "description": "Legacy EIP-155 ERC-20 transfer of 100 USDT on BNB Smart Chain",
+    "id": "legacy_eip155_erc20_transfer",
+    "parsed": {
+      "details": {
+        "chain_id": 56,
+        "gas_limit": 60000,
+        "gas_price": "5000000000",
+        "type": 0
+      },
+      "fee": {
+        "amount": "300000000000000",
+        "asset": "wei"
+      },
+      "sequence": {
+        "nonce": 7
+      },
+      "transfers": [
+        {
+          "amount": "100000000000000000000",
+          "asset": "0x55d398326f99059fF775485246999027B3197955",
+          "from": "0x022b971dFF0C43305e691DEd7a14367AF19D6407",
+          "to": "0x5aAeb6053F3E94C9b9A09f33669435E7Ef1BeAed"
+        }
+      ]
+    },
+    "path": "m/44'/60'/0'/0/0",
+    "public_key": "0x03844a5d329470697de9926c9c98839ea33b6dd9507a896194ae2b91d71faa16d6",
+    "raw_tx": "0xf8690785012a05f20082ea609455d398326f99059ff775485246999027b319795580b844a9059cbb0000000000000000000000005aaeb6053f3e94c9b9a09f33669435e7ef1beaed0000000000000000000000000000000000000000000000056bc75e2d63100000388080",
+    "result": {
+      "r": "0x65f3e2c7ca38deabdacb0eb8a7989c3bcc3ea58b725c64ea3f6cf5097bff4081",
+      "s": "0x2252dce74823ead823a61aecf5e7ac2c922b72bc69642c20e7faa42b8dcd254d",
+      "signer_address": "0x022b971dFF0C43305e691DEd7a14367AF19D6407",
+      "v": 147,
+      "y_parity": 0
+    },
+    "signer_address": "0x022b971dFF0C43305e691DEd7a14367AF19D6407",
+    "signing_input": "0x27371611419f1432dc0d0d56313dde871671eef7a45534e59d6c9265954e1f17"
+  },
+  {
+    "chain": "eip155:137",
+    "description": "Transaction encoded for chain ID 1 submitted for eip155:137",
+    "expected_error": "chain_mismatch",
+    "id": "negative_chain_mismatch",
+    "public_key": "0x03844a5d329470697de9926c9c98839ea33b6dd9507a896194ae2b91d71faa16d6",
+    "raw_tx": "0x02f00105843b9aca008504a817c80082520894fb6916095ca1df60bb79ce92ce3ea74c37c5d359880de0b6b3a764000080c0"
+  },
+  {
+    "chain": "eip155:1",
+    "description": "Transaction with arbitrary unknown contract method selector",
+    "expected_error": "unsupported_transaction",
+    "id": "negative_unknown_calldata",
+    "public_key": "0x03844a5d329470697de9926c9c98839ea33b6dd9507a896194ae2b91d71faa16d6",
+    "raw_tx": "0x02f8390180843b9aca008504a817c800830186a094fb6916095ca1df60bb79ce92ce3ea74c37c5d359809038ed1739000000000000000000000000c0"
+  },
+  {
+    "chain": "eip155:1",
+    "description": "Contract creation transaction with empty 'to' address",
+    "expected_error": "unsupported_transaction",
+    "id": "negative_contract_creation",
+    "public_key": "0x03844a5d329470697de9926c9c98839ea33b6dd9507a896194ae2b91d71faa16d6",
+    "raw_tx": "0x02d50180843b9aca008504a817c800830186a0808080c0"
+  },
+  {
+    "chain": "eip155:137",
+    "description": "ERC-20 transfer with non-zero native ETH value",
+    "expected_error": "unsupported_transaction",
+    "id": "negative_erc20_nonzero_native_value",
+    "public_key": "0x03844a5d329470697de9926c9c98839ea33b6dd9507a896194ae2b91d71faa16d6",
+    "raw_tx": "0x02f876818980843b9aca008504a817c80082fde8942791bca1f2de4661ed88a30c99a7a9449aa84174880de0b6b3a7640000b844a9059cbb000000000000000000000000fb6916095ca1df60bb79ce92ce3ea74c37c5d359000000000000000000000000000000000000000000000000000000001dcd6500c0"
+  },
+  {
+    "chain": "eip155:1",
+    "description": "Truncated / invalid RLP transaction payload",
+    "expected_error": "unsupported_transaction",
+    "id": "negative_malformed_rlp",
+    "public_key": "0x03844a5d329470697de9926c9c98839ea33b6dd9507a896194ae2b91d71faa16d6",
+    "raw_tx": "0x02f8100102"
+  }
+]

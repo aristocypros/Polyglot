@@ -1,0 +1,29 @@
+[package]
+name = "signer"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+k256 = { version = "=0.13.4", features = ["arithmetic", "ecdsa", "pkcs8", "schnorr", "sha256"] }
+ed25519-dalek = { version = "=2.1.1", features = ["serde", "rand_core", "zeroize", "pkcs8"] }
+hmac = "=0.12.1"
+sha2 = "=0.10.8"
+sha3 = "=0.10.8"
+zeroize = { version = "=1.8.1", features = ["derive", "zeroize_derive"] }
+serde = { version = "=1.0.219", features = ["derive"] }
+serde_json = "=1.0.140"
+hex = "=0.4.3"
+thiserror = "=2.0.12"
+cryptoki = "=0.10.0"
+bs58 = "=0.5.1"
+ripemd = "=0.1.3"
+serde_json_canonicalizer = "=0.4.1"
+base64ct = { version = "=1.8.3", features = ["alloc"] }
+p256 = { version = "=0.13.2", features = ["ecdsa", "pkcs8", "sha256"] }
+serde_yaml = "=0.9.34"
+chrono = { version = "0.4", features = ["serde", "clock"] }
+postgres = { version = "0.19.9", default-features = false, features = ["with-chrono-0_4", "with-uuid-1"] }
+uuid = { version = "1.10", features = ["v4", "serde"] }
+
+[dev-dependencies]
+cryptoki-sys = "=0.4.0"

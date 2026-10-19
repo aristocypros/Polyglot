@@ -1,0 +1,8 @@
+**/target
+target/
+signer/target/
+.git
+.venv
+secrets/
+*.log
+.DS_Store

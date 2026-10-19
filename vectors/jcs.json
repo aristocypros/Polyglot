@@ -1,0 +1,219 @@
+{
+  "description": "RFC 8785 JSON Canonicalization Scheme (JCS) test vectors and Polyglot envelope request body vectors",
+  "standard_vectors": [
+    {
+      "id": "rfc8785_sec_3_2_2_primitives",
+      "description": "RFC 8785 Section 3.2.2 primitive data types (numbers, string escapes, literals)",
+      "input": {
+        "numbers": [333333333.3333333, 1e30, 4.5, 0.002, 1e-27],
+        "string": "\u20ac$\u000f\nA'B\"\\\"/",
+        "literals": [null, true, false]
+      },
+      "canonical": "{\"literals\":[null,true,false],\"numbers\":[333333333.3333333,1e+30,4.5,0.002,1e-27],\"string\":\"€$\\u000f\\nA'B\\\"\\\\\\\"/\"}"
+    },
+    {
+      "id": "rfc8785_sec_3_2_3_property_sorting",
+      "description": "RFC 8785 Section 3.2.3 lexicographical sorting of dictionary keys",
+      "input": {
+        "z": 1,
+        "a": 2,
+        "m": {
+          "y": "nested_last",
+          "b": "nested_first"
+        }
+      },
+      "canonical": "{\"a\":2,\"m\":{\"b\":\"nested_first\",\"y\":\"nested_last\"},\"z\":1}"
+    },
+    {
+      "id": "utf16_surrogate_vs_bmp_sorting",
+      "description": "UTF-16 code unit ordering: supplementary characters (surrogate pairs 0xD800..0xDFFF like 😀 U+1F600) sort before high BMP characters (U+FFF0)",
+      "input": {
+        "\ufff0": "bmp_high",
+        "\ud83d\ude00": "emoji_surrogate"
+      },
+      "canonical": "{\"😀\":\"emoji_surrogate\",\"\ufff0\":\"bmp_high\"}"
+    },
+    {
+      "id": "forward_slash_not_escaped",
+      "description": "Forward slash / must NOT be escaped in canonical JSON",
+      "input": {
+        "url": "https://example.com/api/v1/resource",
+        "path": "m/44'/60'/0'/0/0"
+      },
+      "canonical": "{\"path\":\"m/44'/60'/0'/0/0\",\"url\":\"https://example.com/api/v1/resource\"}"
+    },
+    {
+      "id": "control_characters_escaping",
+      "description": "Control characters U+0000..U+001F must use shorthand (\\b,\\t,\\n,\\f,\\r) or \\u00xx",
+      "input": {
+        "ctrl": "\u0000\u0001\u0008\u0009\n\u000c\r\u001f"
+      },
+      "canonical": "{\"ctrl\":\"\\u0000\\u0001\\b\\t\\n\\f\\r\\u001f\"}"
+    },
+    {
+      "id": "empty_structures",
+      "description": "Empty objects and arrays serialize without whitespace",
+      "input": {
+        "arr": [],
+        "obj": {}
+      },
+      "canonical": "{\"arr\":[],\"obj\":{}}"
+    }
+  ],
+  "polyglot_bodies": [
+    {
+      "id": "create_wallet_bip32_secp256k1",
+      "description": "Valid create_wallet body for BIP32 secp256k1 wallet",
+      "input": {
+        "v": 1,
+        "type": "create_wallet",
+        "request_id": "11111111-1111-4111-8111-111111111111",
+        "nonce": "000102030405060708090a0b0c0d0e0f",
+        "audience": "signer-local-1",
+        "expires_at": "2026-10-16T12:10:00Z",
+        "decision_id": "dec_create_001",
+        "wallet_id": "w_01HZABCDEF1234567890",
+        "scheme": "bip32",
+        "curve": "secp256k1"
+      },
+      "canonical": "{\"audience\":\"signer-local-1\",\"curve\":\"secp256k1\",\"decision_id\":\"dec_create_001\",\"expires_at\":\"2026-10-16T12:10:00Z\",\"nonce\":\"000102030405060708090a0b0c0d0e0f\",\"request_id\":\"11111111-1111-4111-8111-111111111111\",\"scheme\":\"bip32\",\"type\":\"create_wallet\",\"v\":1,\"wallet_id\":\"w_01HZABCDEF1234567890\"}",
+      "body_b64url": "eyJhdWRpZW5jZSI6InNpZ25lci1sb2NhbC0xIiwiY3VydmUiOiJzZWNwMjU2azEiLCJkZWNpc2lvbl9pZCI6ImRlY19jcmVhdGVfMDAxIiwiZXhwaXJlc19hdCI6IjIwMjYtMTAtMTZUMTI6MTA6MDBaIiwibm9uY2UiOiIwMDAxMDIwMzA0MDUwNjA3MDgwOTBhMGIwYzBkMGUwZiIsInJlcXVlc3RfaWQiOiIxMTExMTExMS0xMTExLTQxMTEtODExMS0xMTExMTExMTExMTEiLCJzY2hlbWUiOiJiaXAzMiIsInR5cGUiOiJjcmVhdGVfd2FsbGV0IiwidiI6MSwid2FsbGV0X2lkIjoid18wMUhaQUJDREVGMTIzNDU2Nzg5MCJ9",
+      "sha256": "964d7dce7372226b51e71bc810719c8a747eaebd329677360a648fc4fc791973"
+    },
+    {
+      "id": "derive_public_slip10_ed25519",
+      "description": "Valid derive_public body for SLIP10 ed25519 wallet",
+      "input": {
+        "v": 1,
+        "type": "derive_public",
+        "request_id": "22222222-2222-4222-8222-222222222222",
+        "nonce": "101112131415161718191a1b1c1d1e1f",
+        "audience": "signer-local-1",
+        "expires_at": "2026-10-16T12:10:00Z",
+        "decision_id": "dec_derive_002",
+        "wallet_id": "w_02SLIP10SOLANA999999",
+        "scheme": "slip10",
+        "curve": "ed25519",
+        "path": [2147483692, 2147484149, 2147483648, 2147483648]
+      },
+      "canonical": "{\"audience\":\"signer-local-1\",\"curve\":\"ed25519\",\"decision_id\":\"dec_derive_002\",\"expires_at\":\"2026-10-16T12:10:00Z\",\"nonce\":\"101112131415161718191a1b1c1d1e1f\",\"path\":[2147483692,2147484149,2147483648,2147483648],\"request_id\":\"22222222-2222-4222-8222-222222222222\",\"scheme\":\"slip10\",\"type\":\"derive_public\",\"v\":1,\"wallet_id\":\"w_02SLIP10SOLANA999999\"}",
+      "body_b64url": "eyJhdWRpZW5jZSI6InNpZ25lci1sb2NhbC0xIiwiY3VydmUiOiJlZDI1NTE5IiwiZGVjaXNpb25faWQiOiJkZWNfZGVyaXZlXzAwMiIsImV4cGlyZXNfYXQiOiIyMDI2LTEwLTE2VDEyOjEwOjAwWiIsIm5vbmNlIjoiMTAxMTEyMTMxNDE1MTYxNzE4MTkxYTFiMWMxZDFlMWYiLCJwYXRoIjpbMjE0NzQ4MzY5MiwyMTQ3NDg0MTQ5LDIxNDc0ODM2NDgsMjE0NzQ4MzY0OF0sInJlcXVlc3RfaWQiOiIyMjIyMjIyMi0yMjIyLTQyMjItODIyMi0yMjIyMjIyMjIyMjIiLCJzY2hlbWUiOiJzbGlwMTAiLCJ0eXBlIjoiZGVyaXZlX3B1YmxpYyIsInYiOjEsIndhbGxldF9pZCI6IndfMDJTTElQMTBTT0xBTkE5OTk5OTkifQ",
+      "sha256": "46a24376b8962ab7cae0c79b7cc0394c040bbb6bafb06783d5cc48bccb883596"
+    },
+    {
+      "id": "sign_digest_blind",
+      "description": "Valid sign digest request (blind signing)",
+      "input": {
+        "v": 1,
+        "type": "sign",
+        "request_id": "33333333-3333-4333-8333-333333333333",
+        "nonce": "202122232425262728292a2b2c2d2e2f",
+        "audience": "signer-local-1",
+        "expires_at": "2026-10-16T12:10:00Z",
+        "decision_id": "dec_sign_digest_003",
+        "wallet_id": "w_01HZABCDEF1234567890",
+        "scheme": "bip32",
+        "curve": "secp256k1",
+        "path": [2147483692, 2147483648, 2147483648, 0, 5],
+        "payload_encoding": "digest",
+        "payload": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+      },
+      "canonical": "{\"audience\":\"signer-local-1\",\"curve\":\"secp256k1\",\"decision_id\":\"dec_sign_digest_003\",\"expires_at\":\"2026-10-16T12:10:00Z\",\"nonce\":\"202122232425262728292a2b2c2d2e2f\",\"path\":[2147483692,2147483648,2147483648,0,5],\"payload\":\"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\",\"payload_encoding\":\"digest\",\"request_id\":\"33333333-3333-4333-8333-333333333333\",\"scheme\":\"bip32\",\"type\":\"sign\",\"v\":1,\"wallet_id\":\"w_01HZABCDEF1234567890\"}",
+      "body_b64url": "eyJhdWRpZW5jZSI6InNpZ25lci1sb2NhbC0xIiwiY3VydmUiOiJzZWNwMjU2azEiLCJkZWNpc2lvbl9pZCI6ImRlY19zaWduX2RpZ2VzdF8wMDMiLCJleHBpcmVzX2F0IjoiMjAyNi0xMC0xNlQxMjoxMDowMFoiLCJub25jZSI6IjIwMjEyMjIzMjQyNTI2MjcyODI5MmEyYjJjMmQyZTJmIiwicGF0aCI6WzIxNDc0ODM2OTIsMjE0NzQ4MzY0OCwyMTQ3NDgzNjQ4LDAsNV0sInBheWxvYWQiOiI5Zjg2ZDA4MTg4NGM3ZDY1OWEyZmVhYTBjNTVhZDAxNWEzYmY0ZjFiMmIwYjgyMmNkMTVkNmMxNWIwZjAwYTA4IiwicGF5bG9hZF9lbmNvZGluZyI6ImRpZ2VzdCIsInJlcXVlc3RfaWQiOiIzMzMzMzMzMy0zMzMzLTQzMzMtODMzMy0zMzMzMzMzMzMzMzMiLCJzY2hlbWUiOiJiaXAzMiIsInR5cGUiOiJzaWduIiwidiI6MSwid2FsbGV0X2lkIjoid18wMUhaQUJDREVGMTIzNDU2Nzg5MCJ9",
+      "sha256": "4f9404ff7d0532e30db7a42a5b8a6fc32c1e71824396817db7a9e034f28b0c70"
+    },
+    {
+      "id": "sign_evm_tx",
+      "description": "Valid sign raw EIP-1559 transaction request",
+      "input": {
+        "v": 1,
+        "type": "sign",
+        "request_id": "44444444-4444-4444-8444-444444444444",
+        "nonce": "303132333435363738393a3b3c3d3e3f",
+        "audience": "signer-local-1",
+        "expires_at": "2026-10-16T12:10:00Z",
+        "decision_id": "dec_sign_tx_004",
+        "wallet_id": "w_01HZABCDEF1234567890",
+        "scheme": "bip32",
+        "curve": "secp256k1",
+        "path": [2147483692, 2147483708, 2147483648, 0, 0],
+        "chain": "eip155:1",
+        "payload_encoding": "tx",
+        "payload": "02f8700101843b9aca00843b9aca00825208940000000000000000000000000000000000000001880de0b6b3a764000080c0"
+      },
+      "canonical": "{\"audience\":\"signer-local-1\",\"chain\":\"eip155:1\",\"curve\":\"secp256k1\",\"decision_id\":\"dec_sign_tx_004\",\"expires_at\":\"2026-10-16T12:10:00Z\",\"nonce\":\"303132333435363738393a3b3c3d3e3f\",\"path\":[2147483692,2147483708,2147483648,0,0],\"payload\":\"02f8700101843b9aca00843b9aca00825208940000000000000000000000000000000000000001880de0b6b3a764000080c0\",\"payload_encoding\":\"tx\",\"request_id\":\"44444444-4444-4444-8444-444444444444\",\"scheme\":\"bip32\",\"type\":\"sign\",\"v\":1,\"wallet_id\":\"w_01HZABCDEF1234567890\"}",
+      "body_b64url": "eyJhdWRpZW5jZSI6InNpZ25lci1sb2NhbC0xIiwiY2hhaW4iOiJlaXAxNTU6MSIsImN1cnZlIjoic2VjcDI1NmsxIiwiZGVjaXNpb25faWQiOiJkZWNfc2lnbl90eF8wMDQiLCJleHBpcmVzX2F0IjoiMjAyNi0xMC0xNlQxMjoxMDowMFoiLCJub25jZSI6IjMwMzEzMjMzMzQzNTM2MzczODM5M2EzYjNjM2QzZTNmIiwicGF0aCI6WzIxNDc0ODM2OTIsMjE0NzQ4MzcwOCwyMTQ3NDgzNjQ4LDAsMF0sInBheWxvYWQiOiIwMmY4NzAwMTAxODQzYjlhY2EwMDg0M2I5YWNhMDA4MjUyMDg5NDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDE4ODBkZTBiNmIzYTc2NDAwMDA4MGMwIiwicGF5bG9hZF9lbmNvZGluZyI6InR4IiwicmVxdWVzdF9pZCI6IjQ0NDQ0NDQ0LTQ0NDQtNDQ0NC04NDQ0LTQ0NDQ0NDQ0NDQ0NCIsInNjaGVtZSI6ImJpcDMyIiwidHlwZSI6InNpZ24iLCJ2IjoxLCJ3YWxsZXRfaWQiOiJ3XzAxSFpBQkNERUYxMjM0NTY3ODkwIn0",
+      "sha256": "6ce258afae69af99c5a661026c3d49299239f155dcd5ee62f4a2d2fa6150b4ad"
+    },
+    {
+      "id": "sign_bitcoin_multi_input",
+      "description": "Valid sign Bitcoin multi-input PSBT transaction request with input_paths",
+      "input": {
+        "v": 1,
+        "type": "sign",
+        "request_id": "55555555-5555-4555-8555-555555555555",
+        "nonce": "404142434445464748494a4b4c4d4e4f",
+        "audience": "signer-local-1",
+        "expires_at": "2026-10-16T12:10:00Z",
+        "decision_id": "dec_sign_btc_005",
+        "wallet_id": "w_01HZABCDEF1234567890",
+        "scheme": "bip32",
+        "curve": "secp256k1",
+        "input_paths": [
+          [2147483732, 2147483648, 2147483648, 0, 0],
+          [2147483732, 2147483648, 2147483648, 0, 1]
+        ],
+        "chain": "bip122:000000000019d6689c085ae165831e93",
+        "payload_encoding": "tx",
+        "payload": "70736274ff01007d02000000010000000000"
+      },
+      "canonical": "{\"audience\":\"signer-local-1\",\"chain\":\"bip122:000000000019d6689c085ae165831e93\",\"curve\":\"secp256k1\",\"decision_id\":\"dec_sign_btc_005\",\"expires_at\":\"2026-10-16T12:10:00Z\",\"input_paths\":[[2147483732,2147483648,2147483648,0,0],[2147483732,2147483648,2147483648,0,1]],\"nonce\":\"404142434445464748494a4b4c4d4e4f\",\"payload\":\"70736274ff01007d02000000010000000000\",\"payload_encoding\":\"tx\",\"request_id\":\"55555555-5555-4555-8555-555555555555\",\"scheme\":\"bip32\",\"type\":\"sign\",\"v\":1,\"wallet_id\":\"w_01HZABCDEF1234567890\"}",
+      "body_b64url": "eyJhdWRpZW5jZSI6InNpZ25lci1sb2NhbC0xIiwiY2hhaW4iOiJiaXAxMjI6MDAwMDAwMDAwMDE5ZDY2ODljMDg1YWUxNjU4MzFlOTMiLCJjdXJ2ZSI6InNlY3AyNTZrMSIsImRlY2lzaW9uX2lkIjoiZGVjX3NpZ25fYnRjXzAwNSIsImV4cGlyZXNfYXQiOiIyMDI2LTEwLTE2VDEyOjEwOjAwWiIsImlucHV0X3BhdGhzIjpbWzIxNDc0ODM3MzIsMjE0NzQ4MzY0OCwyMTQ3NDgzNjQ4LDAsMF0sWzIxNDc0ODM3MzIsMjE0NzQ4MzY0OCwyMTQ3NDgzNjQ4LDAsMV1dLCJub25jZSI6IjQwNDE0MjQzNDQ0NTQ2NDc0ODQ5NGE0YjRjNGQ0ZTRmIiwicGF5bG9hZCI6IjcwNzM2Mjc0ZmYwMTAwN2QwMjAwMDAwMDAxMDAwMDAwMDAwMCIsInBheWxvYWRfZW5jb2RpbmciOiJ0eCIsInJlcXVlc3RfaWQiOiI1NTU1NTU1NS01NTU1LTQ1NTUtODU1NS01NTU1NTU1NTU1NTUiLCJzY2hlbWUiOiJiaXAzMiIsInR5cGUiOiJzaWduIiwidiI6MSwid2FsbGV0X2lkIjoid18wMUhaQUJDREVGMTIzNDU2Nzg5MCJ9",
+      "sha256": "8009033e3803f53da83145b86ebca6f18f49131d494b5ffd34fe607e960bf6c4"
+    }
+  ],
+  "rejection_vectors": [
+    {
+      "id": "reject_space_after_colon",
+      "description": "Non-canonical whitespace: space after colon",
+      "raw_bytes_utf8": "{\"audience\":\"signer-local-1\",\"curve\":\"secp256k1\",\"decision_id\":\"dec_1\",\"expires_at\":\"2026-10-16T12:10:00Z\",\"nonce\":\"0123456789abcdef0123456789abcdef\",\"request_id\":\"7b47e4dc-10a3-4a11-a836-ecbf31dfdc07\",\"scheme\":\"bip32\",\"type\":\"create_wallet\",\"v\": 1,\"wallet_id\":\"w_1\"}",
+      "expected_error": "non_canonical_body"
+    },
+    {
+      "id": "reject_space_after_comma",
+      "description": "Non-canonical whitespace: space after comma",
+      "raw_bytes_utf8": "{\"audience\":\"signer-local-1\", \"curve\":\"secp256k1\",\"decision_id\":\"dec_1\",\"expires_at\":\"2026-10-16T12:10:00Z\",\"nonce\":\"0123456789abcdef0123456789abcdef\",\"request_id\":\"7b47e4dc-10a3-4a11-a836-ecbf31dfdc07\",\"scheme\":\"bip32\",\"type\":\"create_wallet\",\"v\":1,\"wallet_id\":\"w_1\"}",
+      "expected_error": "non_canonical_body"
+    },
+    {
+      "id": "reject_newline_whitespace",
+      "description": "Non-canonical whitespace: newline between tokens",
+      "raw_bytes_utf8": "{\n\"audience\":\"signer-local-1\",\"curve\":\"secp256k1\",\"decision_id\":\"dec_1\",\"expires_at\":\"2026-10-16T12:10:00Z\",\"nonce\":\"0123456789abcdef0123456789abcdef\",\"request_id\":\"7b47e4dc-10a3-4a11-a836-ecbf31dfdc07\",\"scheme\":\"bip32\",\"type\":\"create_wallet\",\"v\":1,\"wallet_id\":\"w_1\"}",
+      "expected_error": "non_canonical_body"
+    },
+    {
+      "id": "reject_reordered_keys",
+      "description": "Non-canonical key ordering: 'v' appears before 'type'",
+      "raw_bytes_utf8": "{\"audience\":\"signer-local-1\",\"curve\":\"secp256k1\",\"decision_id\":\"dec_1\",\"expires_at\":\"2026-10-16T12:10:00Z\",\"nonce\":\"0123456789abcdef0123456789abcdef\",\"request_id\":\"7b47e4dc-10a3-4a11-a836-ecbf31dfdc07\",\"scheme\":\"bip32\",\"v\":1,\"type\":\"create_wallet\",\"wallet_id\":\"w_1\"}",
+      "expected_error": "non_canonical_body"
+    },
+    {
+      "id": "reject_unknown_field",
+      "description": "Strict rejection of unapproved / unexpected body field",
+      "raw_bytes_utf8": "{\"audience\":\"signer-local-1\",\"curve\":\"secp256k1\",\"decision_id\":\"dec_1\",\"expires_at\":\"2026-10-16T12:10:00Z\",\"malicious_field\":true,\"nonce\":\"0123456789abcdef0123456789abcdef\",\"request_id\":\"7b47e4dc-10a3-4a11-a836-ecbf31dfdc07\",\"scheme\":\"bip32\",\"type\":\"create_wallet\",\"v\":1,\"wallet_id\":\"w_1\"}",
+      "expected_error": "invalid_request"
+    },
+    {
+      "id": "reject_unknown_version_2",
+      "description": "Reject unsupported envelope version v == 2",
+      "raw_bytes_utf8": "{\"audience\":\"signer-local-1\",\"curve\":\"secp256k1\",\"decision_id\":\"dec_1\",\"expires_at\":\"2026-10-16T12:10:00Z\",\"nonce\":\"0123456789abcdef0123456789abcdef\",\"request_id\":\"7b47e4dc-10a3-4a11-a836-ecbf31dfdc07\",\"scheme\":\"bip32\",\"type\":\"create_wallet\",\"v\":2,\"wallet_id\":\"w_1\"}",
+      "expected_error": "unknown_version"
+    },
+    {
+      "id": "reject_unknown_version_0",
+      "description": "Reject unsupported envelope version v == 0",
+      "raw_bytes_utf8": "{\"audience\":\"signer-local-1\",\"curve\":\"secp256k1\",\"decision_id\":\"dec_1\",\"expires_at\":\"2026-10-16T12:10:00Z\",\"nonce\":\"0123456789abcdef0123456789abcdef\",\"request_id\":\"7b47e4dc-10a3-4a11-a836-ecbf31dfdc07\",\"scheme\":\"bip32\",\"type\":\"create_wallet\",\"v\":0,\"wallet_id\":\"w_1\"}",
+      "expected_error": "unknown_version"
+    }
+  ]
+}

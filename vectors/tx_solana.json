@@ -1,0 +1,220 @@
+[
+  {
+    "chain": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+    "description": "Legacy System Program native transfer of 1 SOL on Solana Mainnet Beta",
+    "id": "solana_mainnet_native_transfer_message",
+    "parsed": {
+      "details": {
+        "chain": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+        "fee_payer": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi",
+        "instructions_count": 1,
+        "num_readonly_signed_accounts": 0,
+        "num_readonly_unsigned_accounts": 1,
+        "num_signatures": 1,
+        "recent_blockhash": "93MB2qRDNVLxbmmPuYpLdAqn3u2x9ZhaVZK5wELHueP8"
+      },
+      "fee": {
+        "amount": "5000",
+        "asset": "lamports"
+      },
+      "sequence": {
+        "recent_blockhash": "93MB2qRDNVLxbmmPuYpLdAqn3u2x9ZhaVZK5wELHueP8"
+      },
+      "transfers": [
+        {
+          "amount": "1000000000",
+          "asset": "SOL",
+          "from": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi",
+          "to": "6k78AbasGMFFrhG95Pj6jQbqkVt7FQMhVgemxJovWKR6"
+        }
+      ]
+    },
+    "path": "m/44'/501'/0'/0'",
+    "public_key": "0x06047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd337",
+    "raw_tx": "0x0100010306047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd33755555555555555555555555555555555555555555555555555555555555555550000000000000000000000000000000000000000000000000000000000000000777777777777777777777777777777777777777777777777777777777777777701020200010c0200000000ca9a3b00000000",
+    "result": {
+      "signature": "3QcVLLSbAAsMMepTzJf8V36f5EAHkvYrQdte3yM9kU7AYVq77ejvuRk9nxYu2X93MfREBdnheSemEVcLaqeuTw7X",
+      "signature_hex": "0x78655ece24116ec50b47162303bc36931c4bcbc365c08e68263aab8df008ae98d282bad44f63c72ca60d0e4e15d7871d24572b78eefc82e85388a708d1627602",
+      "signer_address": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi"
+    },
+    "signer_address": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi",
+    "signing_input": "0x0100010306047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd33755555555555555555555555555555555555555555555555555555555555555550000000000000000000000000000000000000000000000000000000000000000777777777777777777777777777777777777777777777777777777777777777701020200010c0200000000ca9a3b00000000"
+  },
+  {
+    "chain": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1",
+    "description": "Unsigned wire transaction (with 1 dummy 64-byte zero signature) of 2.5 SOL on Solana Devnet",
+    "id": "solana_devnet_native_transfer_unsigned_tx",
+    "parsed": {
+      "details": {
+        "chain": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1",
+        "fee_payer": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi",
+        "instructions_count": 1,
+        "num_readonly_signed_accounts": 0,
+        "num_readonly_unsigned_accounts": 1,
+        "num_signatures": 1,
+        "recent_blockhash": "AByCTxLPRZPoyK22KdMxa3xkCbcNbeNWzVeEvh6UcJs9"
+      },
+      "fee": {
+        "amount": "5000",
+        "asset": "lamports"
+      },
+      "sequence": {
+        "recent_blockhash": "AByCTxLPRZPoyK22KdMxa3xkCbcNbeNWzVeEvh6UcJs9"
+      },
+      "transfers": [
+        {
+          "amount": "2500000000",
+          "asset": "SOL",
+          "from": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi",
+          "to": "4Ss5JMkXAD9Z7cktFEdrqeMuT6jGMF1pVozTyPHZ6zT4"
+        }
+      ]
+    },
+    "path": "m/44'/501'/0'/0'",
+    "public_key": "0x06047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd337",
+    "raw_tx": "0x01000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100010306047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd33733333333333333333333333333333333333333333333333333333333333333330000000000000000000000000000000000000000000000000000000000000000888888888888888888888888888888888888888888888888888888888888888801020200010c0200000000f9029500000000",
+    "result": {
+      "signature": "5YXBNx42hdfQKG4U3DSHHTkCpEwwZzB5ZX2uKovpxiGc1dPBW5rRa3A7D5aDmAPZV2vucvER92nCaMpyGR3p9iUx",
+      "signature_hex": "0xe33ffb3175288a7c9880edbf926417bdc1ee79c0de1bae95dbe72c1750d6a39c58ab98e4fc29b4fd2af2b45213d43e88e2df0fc61f69fb08b2a87518664f5d09",
+      "signer_address": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi"
+    },
+    "signer_address": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi",
+    "signing_input": "0x0100010306047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd33733333333333333333333333333333333333333333333333333333333333333330000000000000000000000000000000000000000000000000000000000000000888888888888888888888888888888888888888888888888888888888888888801020200010c0200000000f9029500000000"
+  },
+  {
+    "chain": "solana:devnet",
+    "description": "Wire transaction with empty signature prefix (0 signatures) of 0.05 SOL on Solana Devnet",
+    "id": "solana_devnet_zero_signatures_wire_tx",
+    "parsed": {
+      "details": {
+        "chain": "solana:devnet",
+        "fee_payer": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi",
+        "instructions_count": 1,
+        "num_readonly_signed_accounts": 0,
+        "num_readonly_unsigned_accounts": 1,
+        "num_signatures": 1,
+        "recent_blockhash": "BLbDu5FZUdSfLrGejhuaWw5iMJBo3j3TVRyPv9rfJyMA"
+      },
+      "fee": {
+        "amount": "5000",
+        "asset": "lamports"
+      },
+      "sequence": {
+        "recent_blockhash": "BLbDu5FZUdSfLrGejhuaWw5iMJBo3j3TVRyPv9rfJyMA"
+      },
+      "transfers": [
+        {
+          "amount": "50000000",
+          "asset": "SOL",
+          "from": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi",
+          "to": "5bV6jUfhDHCQVA1WfKBUnXUsboJgoKgkzkKcxr3joew5"
+        }
+      ]
+    },
+    "path": "m/44'/501'/0'/0'",
+    "public_key": "0x06047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd337",
+    "raw_tx": "0x000100010306047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd33744444444444444444444444444444444444444444444444444444444444444440000000000000000000000000000000000000000000000000000000000000000999999999999999999999999999999999999999999999999999999999999999901020200010c0200000080f0fa0200000000",
+    "result": {
+      "signature": "5HyFPHKXkTRnFEEzZC41BqTwrVjEMJN5jG9fLYUVgk4GME4W6x7YtuzhqiDZ4DUzSS2Fe1r4a7qkd6FghW6MKunN",
+      "signature_hex": "0xd6b3bcc279464f33f05b8cd269bda6b494918470ba336b3c5f8e5a6119be5ff99fcb00f896ce36090df6c804519022880e67fdf211a82e17119a59cec1fa8e07",
+      "signer_address": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi"
+    },
+    "signer_address": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi",
+    "signing_input": "0x0100010306047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd33744444444444444444444444444444444444444444444444444444444444444440000000000000000000000000000000000000000000000000000000000000000999999999999999999999999999999999999999999999999999999999999999901020200010c0200000080f0fa0200000000"
+  },
+  {
+    "chain": "solana:mainnet",
+    "description": "Legacy System Program multi-recipient transfer of 0.1 SOL and 0.2 SOL on Solana Mainnet",
+    "id": "solana_mainnet_multi_transfer_message",
+    "parsed": {
+      "details": {
+        "chain": "solana:mainnet",
+        "fee_payer": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi",
+        "instructions_count": 2,
+        "num_readonly_signed_accounts": 0,
+        "num_readonly_unsigned_accounts": 1,
+        "num_signatures": 1,
+        "recent_blockhash": "CVDFLCAjXhVWiPXH9nTCTpCgVzmDVoiPzNJYuccr1dqB"
+      },
+      "fee": {
+        "amount": "5000",
+        "asset": "lamports"
+      },
+      "sequence": {
+        "recent_blockhash": "CVDFLCAjXhVWiPXH9nTCTpCgVzmDVoiPzNJYuccr1dqB"
+      },
+      "transfers": [
+        {
+          "amount": "100000000",
+          "asset": "SOL",
+          "from": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi",
+          "to": "29d2S7vB453rNYFdR5Ycwt7y9haRT5fwVwL9zTmBhfV2"
+        },
+        {
+          "amount": "200000000",
+          "asset": "SOL",
+          "from": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi",
+          "to": "3JF3sEqM796hk5WFqA6EtmEwJQ9quALszsfJyvXNQKy3"
+        }
+      ]
+    },
+    "path": "m/44'/501'/0'/0'",
+    "public_key": "0x06047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd337",
+    "raw_tx": "0x0100010406047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd337111111111111111111111111111111111111111111111111111111111111111122222222222222222222222222222222222222222222222222222222222222220000000000000000000000000000000000000000000000000000000000000000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa02030200010c0200000000e1f50500000000030200020c0200000000c2eb0b00000000",
+    "result": {
+      "signature": "3JYeDnArJVHnP2rPhaLdfV3EDgheNAmpJ4e2V9ba8mceFdpLy8N8ao7sQzys5Rvb7DDYSZLyx13JFyGSmjKVTWnw",
+      "signature_hex": "0x732a23eaaefe57b6f2375132fa5ac7e0b21be44a4fdeb60e5efcd2c221569c128154c3149e186b552b7fa4b7f288e38de402e0abf85b067d7c43ffbe69c2f60c",
+      "signer_address": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi"
+    },
+    "signer_address": "QVQwskmGkDfxQfRkbFJeY2YFm7go3ciiLvuANp1AsCi",
+    "signing_input": "0x0100010406047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd337111111111111111111111111111111111111111111111111111111111111111122222222222222222222222222222222222222222222222222222222222222220000000000000000000000000000000000000000000000000000000000000000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa02030200010c0200000000e1f50500000000030200020c0200000000c2eb0b00000000"
+  },
+  {
+    "chain": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+    "description": "Versioned v0 transaction message rejected by codec",
+    "expected_error": "unsupported_transaction",
+    "id": "negative_versioned_v0_message",
+    "public_key": "0x06047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd337",
+    "raw_tx": "0x80010001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+    "chain": "solana:mainnet",
+    "description": "Transaction invoking unsupported Token Program rejected by codec",
+    "expected_error": "unsupported_transaction",
+    "id": "negative_non_system_program",
+    "public_key": "0x06047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd337",
+    "raw_tx": "0x0100010306047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd33755555555555555555555555555555555555555555555555555555555555555550606060606060606060606060606060606060606060606060606060606060606777777777777777777777777777777777777777777777777777777777777777701020200010c0200000040420f0000000000"
+  },
+  {
+    "chain": "solana:mainnet",
+    "description": "Transaction invoking System Program CreateAccount instruction rejected by codec",
+    "expected_error": "unsupported_transaction",
+    "id": "negative_non_transfer_system_instruction",
+    "public_key": "0x06047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd337",
+    "raw_tx": "0x0100010306047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd33755555555555555555555555555555555555555555555555555555555555555550000000000000000000000000000000000000000000000000000000000000000777777777777777777777777777777777777777777777777777777777777777701020200010c0000000040420f0000000000"
+  },
+  {
+    "chain": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+    "description": "Transaction fee payer does not match derived signer public key",
+    "expected_error": "key_mismatch",
+    "id": "negative_key_mismatch",
+    "public_key": "0x06047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd337",
+    "raw_tx": "0x01000103eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee55555555555555555555555555555555555555555555555555555555555555550000000000000000000000000000000000000000000000000000000000000000777777777777777777777777777777777777777777777777777777777777777701020200010c0200000040420f0000000000"
+  },
+  {
+    "chain": "solana:devnet",
+    "description": "Truncated / malformed message payload rejected by codec",
+    "expected_error": "unsupported_transaction",
+    "id": "negative_truncated_message",
+    "public_key": "0x06047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd337",
+    "raw_tx": "0x0100"
+  },
+  {
+    "chain": "eip155:1",
+    "description": "EVM chain identifier submitted to Solana codec",
+    "expected_error": "unsupported_transaction",
+    "id": "negative_unsupported_chain_namespace",
+    "public_key": "0x06047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd337",
+    "raw_tx": "0x0100010306047c31eaa9019e64465bf89208ec196a579a05b97c3b2ad68b78de81ccd33755555555555555555555555555555555555555555555555555555555555555550000000000000000000000000000000000000000000000000000000000000000777777777777777777777777777777777777777777777777777777777777777701020200010c0200000000ca9a3b00000000"
+  }
+]

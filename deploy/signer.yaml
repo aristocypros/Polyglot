@@ -1,0 +1,57 @@
+# Signer Trust Configuration (signer.yaml)
+# Mount read-only into the signer container at /etc/polyglot/signer.yaml
+
+# Signer audience ID (must match "audience" in request bodies)
+signer_id: "signer-local-1"
+
+# Maximum request lifetime in seconds (default: 600 seconds = 10 minutes)
+max_lifetime_seconds: 600
+
+# Permitted clock skew in seconds (default: 30 seconds)
+clock_skew_seconds: 30
+
+# Deployment profile: "dev" or "prod"
+# In "dev", blind digest signing (payload_encoding: "digest" | "message") is allowed by default.
+# In "prod", blind digest signing is rejected by default.
+profile: "dev"
+
+# Explicit override for digest/message signing (optional; defaults based on profile)
+allow_digest_signing: true
+
+# Pinned policy engine public keys.
+# Exactly one signature matching a pinned key is required to authorize an operation.
+#
+# Supported algorithms:
+#   - "ed25519": Ed25519 signature over SHA-256(canonical_body_bytes)
+#   - "ES256": ECDSA P-256 SHA-256 detached JWS (<header>..<sig>)
+#
+# Public key encodings supported:
+#   - 32-byte hex (for Ed25519)
+#   - SEC1 hex (66 hex chars compressed, 130 hex chars uncompressed, for ES256)
+#   - Base64 / Base64url (unpadded or padded)
+#   - SubjectPublicKeyInfo PEM ("-----BEGIN PUBLIC KEY-----")
+#
+# Validity window:
+#   - not_before: UTC RFC 3339 timestamp (optional)
+#   - not_after: UTC RFC 3339 expiration timestamp (optional)
+policy_engine_keys:
+  # Development policy engine Ed25519 key (kid: pe-dev-1)
+  - kid: "pe-dev-1"
+    alg: "ed25519"
+    public_key: "0x324100934131a62e3ba39bd1f92bfaf69f3996d6ffe550b561cced3b2f70b7bc"
+    not_before: "2026-01-01T00:00:00Z"
+    not_after: "2027-01-01T00:00:00Z"
+
+  # Alternative static Ed25519 key
+  - kid: "pe-dev-1-static"
+    alg: "ed25519"
+    public_key: "0xa4b2856bfec510abab89753fac1ac0e1112364e7d250545963f135f2a33188ed"
+    not_before: "2026-01-01T00:00:00Z"
+    not_after: "2027-01-01T00:00:00Z"
+
+  # Development policy engine ES256 key (kid: pe-dev-2)
+  - kid: "pe-dev-2"
+    alg: "ES256"
+    public_key: "0x02608d1d98542e5f7147d4bae2ac3127f88811f4e17eaa321d87e32435eb1c4dda"
+    not_before: "2026-01-01T00:00:00Z"
+    not_after: "2027-01-01T00:00:00Z"

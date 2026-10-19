@@ -1,0 +1,131 @@
+[
+  {
+    "chain": "tron:0x2b6653dc",
+    "description": "Native TRX transfer of 50 TRX on Tron Mainnet (TransferContract)",
+    "id": "tron_mainnet_native_trx_transfer",
+    "parsed": {
+      "details": {
+        "amount_sun": 50000000,
+        "chain": "tron:0x2b6653dc",
+        "contract_type": "TransferContract",
+        "expiration": 1700000060000,
+        "fee_limit": 0,
+        "ref_block_bytes": "0x1a2b",
+        "ref_block_hash": "0x1122334455667788",
+        "timestamp": 1700000000000
+      },
+      "fee": {
+        "amount": "0",
+        "asset": "sun"
+      },
+      "sequence": {
+        "sequence": 1700000000000
+      },
+      "transfers": [
+        {
+          "amount": "50000000",
+          "asset": "TRX",
+          "from": "TFQBxYkiAo4Ga453M9GcxWHFdMGjjs1LBN",
+          "to": "T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb"
+        }
+      ]
+    },
+    "path": "m/44'/195'/0'/0/0",
+    "public_key": "0x03ba396c084c1a69100b60f75ce89491b0bbf78a75704567ec4ae56dd449c34787",
+    "raw_tx": "0x0a021a2b2208112233445566778840e0a499ffbc315a68080112640a2d747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e5472616e73666572436f6e747261637412330a15413b922835c7b059d20e34e0c85ec02b07c09271df12154100000000000000000000000000000000000000001880e1eb177080d095ffbc31",
+    "result": {
+      "r": "0x040802d4d9410013b981c9e740a5bb6e50b2e84d4d661c979220cb08fed90b62",
+      "recovery_id": 0,
+      "s": "0x6e2b51072dd1676779596138925304bcac35681339b1c27c68e111696746d4ae",
+      "signature_hex": "0x040802d4d9410013b981c9e740a5bb6e50b2e84d4d661c979220cb08fed90b626e2b51072dd1676779596138925304bcac35681339b1c27c68e111696746d4ae1b",
+      "signer_address": "TFQBxYkiAo4Ga453M9GcxWHFdMGjjs1LBN",
+      "v": 27
+    },
+    "signer_address": "TFQBxYkiAo4Ga453M9GcxWHFdMGjjs1LBN",
+    "signing_input": "0x3b7ba0eb7fa14f3efbfd2703d5cf058d15fff76369c04b4dae5fbbf61b2543d8"
+  },
+  {
+    "chain": "tron:0x2b6653dc",
+    "description": "TRC-20 transfer of 100 USDT on Tron Mainnet (TriggerSmartContract in top-level Transaction wrapper)",
+    "id": "tron_mainnet_trc20_usdt_transfer",
+    "parsed": {
+      "details": {
+        "call_value": 0,
+        "chain": "tron:0x2b6653dc",
+        "contract_address": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+        "contract_type": "TriggerSmartContract",
+        "expiration": 1700000070000,
+        "fee_limit": 10000000,
+        "method": "transfer(address,uint256)",
+        "ref_block_bytes": "0x3c4d",
+        "ref_block_hash": "0xaabbccddeeff0011",
+        "selector": "0xa9059cbb",
+        "timestamp": 1700000010000
+      },
+      "fee": {
+        "amount": "10000000",
+        "asset": "sun"
+      },
+      "sequence": {
+        "sequence": 1700000010000
+      },
+      "transfers": [
+        {
+          "amount": "100000000",
+          "asset": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+          "from": "TFQBxYkiAo4Ga453M9GcxWHFdMGjjs1LBN",
+          "to": "T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb"
+        }
+      ]
+    },
+    "path": "m/44'/195'/0'/0/0",
+    "public_key": "0x03ba396c084c1a69100b60f75ce89491b0bbf78a75704567ec4ae56dd449c34787",
+    "raw_tx": "0x0ad3010a023c4d2208aabbccddeeff001140f0f299ffbc315aae01081f12a9010a31747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e54726967676572536d617274436f6e747261637412740a15413b922835c7b059d20e34e0c85ec02b07c09271df121541a614f803b6fd780986a42c78ec9c7f77e6ded13c2244a9059cbb00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005f5e10070909e96ffbc31900180ade204",
+    "result": {
+      "r": "0xbacdf56c1ed9aa240a7d62804b36dc4b1500359de1cbb6d376b48fb04a4160d8",
+      "recovery_id": 0,
+      "s": "0x13528acb2576269a1e02a8004d583a59913476ff886c09598831120254b34acc",
+      "signature_hex": "0xbacdf56c1ed9aa240a7d62804b36dc4b1500359de1cbb6d376b48fb04a4160d813528acb2576269a1e02a8004d583a59913476ff886c09598831120254b34acc1b",
+      "signer_address": "TFQBxYkiAo4Ga453M9GcxWHFdMGjjs1LBN",
+      "v": 27
+    },
+    "signer_address": "TFQBxYkiAo4Ga453M9GcxWHFdMGjjs1LBN",
+    "signing_input": "0xb2cff428d849fa5fa1d28f256e5a1ff2298dd12c88da2dfe5c68b18728fa842a"
+  },
+  {
+    "chain": "tron:0x2b6653dc",
+    "description": "Rejection of unsupported Tron contract type (ExchangeCreateContract = 41)",
+    "expected_error": "unsupported_transaction",
+    "id": "tron_rejection_unsupported_contract_type",
+    "path": "m/44'/195'/0'/0/0",
+    "public_key": "0x03ba396c084c1a69100b60f75ce89491b0bbf78a75704567ec4ae56dd449c34787",
+    "raw_tx": "0x0a02112240e8075a45082912410a33747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e45786368616e6765437265617465436f6e7472616374120a0000000000000000000070e807"
+  },
+  {
+    "chain": "tron:0x2b6653dc",
+    "description": "Rejection of unsupported smart contract method selector (approve 0x095ea7b3)",
+    "expected_error": "unsupported_transaction",
+    "id": "tron_rejection_unsupported_smart_contract_method",
+    "path": "m/44'/195'/0'/0/0",
+    "public_key": "0x03ba396c084c1a69100b60f75ce89491b0bbf78a75704567ec4ae56dd449c34787",
+    "raw_tx": "0x0a02334440e8075aae01081f12a9010a31747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e54726967676572536d617274436f6e747261637412740a15413b922835c7b059d20e34e0c85ec02b07c09271df121541a614f803b6fd780986a42c78ec9c7f77e6ded13c2244095ea7b30000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070e807"
+  },
+  {
+    "chain": "tron:0x2b6653dc",
+    "description": "Rejection when owner_address does not match the derived signer key",
+    "expected_error": "key_mismatch",
+    "id": "tron_rejection_key_mismatch",
+    "path": "m/44'/195'/0'/0/0",
+    "public_key": "0x03ba396c084c1a69100b60f75ce89491b0bbf78a75704567ec4ae56dd449c34787",
+    "raw_tx": "0x0a02556640e8075a68080112640a2d747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e5472616e73666572436f6e747261637412330a15413b922835c7b059d20e34e0c85ec02b07c09271de12154100000000000000000000000000000000000000001880ade20470e807"
+  },
+  {
+    "chain": "tron:0x2b6653dc",
+    "description": "Rejection of TRC-20 TriggerSmartContract with call_value > 0",
+    "expected_error": "unsupported_transaction",
+    "id": "tron_rejection_nonzero_call_value",
+    "path": "m/44'/195'/0'/0/0",
+    "public_key": "0x03ba396c084c1a69100b60f75ce89491b0bbf78a75704567ec4ae56dd449c34787",
+    "raw_tx": "0x0a02778840e8075ab201081f12ad010a31747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e54726967676572536d617274436f6e747261637412780a15413b922835c7b059d20e34e0c85ec02b07c09271df121541a614f803b6fd780986a42c78ec9c7f77e6ded13c18c0843d2244a9059cbb00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005f5e10070e807"
+  }
+]

@@ -1,0 +1,505 @@
+[
+  {
+    "description": "Bitcoin Core official legacy sighash vector 1",
+    "expected_sighash": "31af167a6cf3f9d5f6875caa4d31704ceb0eba078d132b78dab52c3b8997317e",
+    "id": "bitcoin_core_legacy_sighash_1",
+    "input_index": 2,
+    "raw_tx": "907c2bc503ade11cc3b04eb2918b6f547b0630ab569273824748c87ea14b0696526c66ba740200000004ab65ababfd1f9bdd4ef073c7afc4ae00da8a66f429c917a0081ad1e1dabce28d373eab81d8628de802000000096aab5253ab52000052ad042b5f25efb33beec9f3364e8a9139e8439d9d7e26529c3c30b6c3fd89f8684cfd68ea0200000009ab53526500636a52ab599ac2fe02a526ed040000000008535300516352515164370e010000000003006300ab2ec229",
+    "script": "",
+    "sighash_type": 1864164639,
+    "type": "legacy_sighash"
+  },
+  {
+    "description": "Bitcoin Core official legacy sighash vector 2",
+    "expected_sighash": "48d6a1bd2cd9eec54eb866fc71209418a950402b5d7e52363bfb75c98e141175",
+    "id": "bitcoin_core_legacy_sighash_2",
+    "input_index": 0,
+    "raw_tx": "a0aa3126041621a6dea5b800141aa696daf28408959dfb2df96095db9fa425ad3f427f2f6103000000015360290e9c6063fa26912c2e7fb6a0ad80f1c5fea1771d42f12976092e7a85a4229fdb6e890000000001abc109f6e47688ac0e4682988785744602b8c87228fcef0695085edf19088af1a9db126e93000000000665516aac536affffffff8fe53e0806e12dfd05d67ac68f4768fdbe23fc48ace22a5aa8ba04c96d58e2750300000009ac51abac63ab5153650524aa680455ce7b000000000000499e50030000000008636a00ac526563ac5051ee030000000003abacabd2b6fe000000000003516563910fb6b5",
+    "script": "65",
+    "sighash_type": -1391424484,
+    "type": "legacy_sighash"
+  },
+  {
+    "description": "Bitcoin Core official legacy sighash vector 3",
+    "expected_sighash": "2a3d95b09237b72034b23f2d2bb29fa32a58ab5c6aa72f6aafdfa178ab1dd01c",
+    "id": "bitcoin_core_legacy_sighash_3",
+    "input_index": 0,
+    "raw_tx": "6e7e9d4b04ce17afa1e8546b627bb8d89a6a7fefd9d892ec8a192d79c2ceafc01694a6a7e7030000000953ac6a51006353636a33bced1544f797f08ceed02f108da22cd24c9e7809a446c61eb3895914508ac91f07053a01000000055163ab516affffffff11dc54eee8f9e4ff0bcf6b1a1a35b1cd10d63389571375501af7444073bcec3c02000000046aab53514a821f0ce3956e235f71e4c69d91abe1e93fb703bd33039ac567249ed339bf0ba0883ef300000000090063ab65000065ac654bec3cc504bcf499020000000005ab6a52abac64eb060100000000076a6a5351650053bbbc130100000000056a6aab53abd6e1380100000000026a51c4e509b8",
+    "script": "acab655151",
+    "sighash_type": 479279909,
+    "type": "legacy_sighash"
+  },
+  {
+    "description": "Bitcoin Core official legacy sighash vector 4",
+    "expected_sighash": "06e328de263a87b09beabe222a21627a6ea5c7f560030da31610c4611f4a46bc",
+    "id": "bitcoin_core_legacy_sighash_4",
+    "input_index": 1,
+    "raw_tx": "73107cbd025c22ebc8c3e0a47b2a760739216a528de8d4dab5d45cbeb3051cebae73b01ca10200000007ab6353656a636affffffffe26816dffc670841e6a6c8c61c586da401df1261a330a6c6b3dd9f9a0789bc9e000000000800ac6552ac6aac51ffffffff0174a8f0010000000004ac52515100000000",
+    "script": "5163ac63635151ac",
+    "sighash_type": 1190874345,
+    "type": "legacy_sighash"
+  },
+  {
+    "description": "Bitcoin Core official legacy sighash vector 5",
+    "expected_sighash": "746306f322de2b4b58ffe7faae83f6a72433c22f88062cdde881d4dd8a5a4e2d",
+    "id": "bitcoin_core_legacy_sighash_5",
+    "input_index": 0,
+    "raw_tx": "50818f4c01b464538b1e7e7f5ae4ed96ad23c68c830e78da9a845bc19b5c3b0b20bb82e5e9030000000763526a63655352ffffffff023b3f9c040000000008630051516a6a5163a83caf01000000000553ab65510000000000",
+    "script": "6aac",
+    "sighash_type": 946795545,
+    "type": "legacy_sighash"
+  },
+  {
+    "amount_sats": 600000000,
+    "description": "BIP143 Native P2WPKH reference test vector",
+    "expected_sighash": "c37af31116d1b27caf68aae9e3ac82f1477929014d5b917657d0eb49478cb670",
+    "id": "bip143_native_p2wpkh",
+    "input_index": 1,
+    "pubkey_hash": "1d0f172a0ecb48aee1be1f2687d2963ae33f71a1",
+    "public_key": "025476c2e83188368da1ff3e292e7acafcdb3566bb0ad253f62fc70f07aeee6357",
+    "raw_tx": "0100000002fff7f7881a8099afa6940d42d1e7f6362bec38171ea3edf433541db4e4ad969f0000000000eeffffffef51e1b804cc89d182d279655c3aa89e815b1b309fe287d9b2b55d57b90ec68a0100000000ffffffff02202cb206000000001976a9148280b37df378db99f66f85c95a783a76ac7a6d5988ac9093510d000000001976a9143bde42dbee7e4dbe6a21b2d50ce2f0167faa815988ac11000000",
+    "sighash_type": 1,
+    "type": "bip143"
+  },
+  {
+    "amount_sats": 1000000000,
+    "description": "BIP143 P2SH-P2WPKH reference test vector",
+    "expected_sighash": "64f3b0f4dd2bb3aa1ce8566d220cc74dda9df97d8490cc81d89d735c92e59fb6",
+    "id": "bip143_p2sh_p2wpkh",
+    "input_index": 0,
+    "pubkey_hash": "79091972186c449eb1ded22b78e40d009bdf0089",
+    "public_key": "03ad1d8e89212f0b92c74d23bb710c00662ad1470198ac48c43f7d6f93a2a26873",
+    "raw_tx": "0100000001db6b1b20aa0fd7b23880be2ecbd4a98130974cf4748fb66092ac4d3ceb1a54770100000000feffffff02b8b4eb0b000000001976a914a457b684d7f0d539a46a45bbc043f35b59d0d96388ac0008af2f000000001976a914fd270b1ee6abcaea97fea7ad0402e8bd8ad6d77c88ac92040000",
+    "sighash_type": 1,
+    "type": "bip143"
+  },
+  {
+    "description": "BIP341 official wallet test vector key-path (default, hash_type 0)",
+    "expected_sighash": "4f900a0bae3f1446fd48490c2958b5a023228f01661cda3496a11da502a7f7ef",
+    "hash_type": 0,
+    "id": "bip341_keypath_default",
+    "input_index": 4,
+    "raw_unsigned_tx": "02000000097de20cbff686da83a54981d2b9bab3586f4ca7e48f57f5b55963115f3b334e9c010000000000000000d7b7cab57b1393ace2d064f4d4a2cb8af6def61273e127517d44759b6dafdd990000000000fffffffff8e1f583384333689228c5d28eac13366be082dc57441760d957275419a418420000000000fffffffff0689180aa63b30cb162a73c6d2a38b7eeda2a83ece74310fda0843ad604853b0100000000feffffffaa5202bdf6d8ccd2ee0f0202afbbb7461d9264a25e5bfd3c5a52ee1239e0ba6c0000000000feffffff956149bdc66faa968eb2be2d2faa29718acbfe3941215893a2a3446d32acd050000000000000000000e664b9773b88c09c32cb70a2a3e4da0ced63b7ba3b22f848531bbb1d5d5f4c94010000000000000000e9aa6b8e6c9de67619e6a3924ae25696bb7b694bb677a632a74ef7eadfd4eabf0000000000ffffffffa778eb6a263dc090464cd125c466b5a99667720b1c110468831d058aa1b82af10100000000ffffffff0200ca9a3b000000001976a91406afd46bcdfd22ef94ac122aa11f241244a37ecc88ac807840cb0000000020ac9a87f5594be208f8532db38cff670c450ed2fea8fcdefcc9a663f78bab962b0065cd1d",
+    "type": "bip341",
+    "utxos_spent": [
+      {
+        "amount_sats": 420000000,
+        "script_pubkey": "512053a1f6e454df1aa2776a2814a721372d6258050de330b3c6d10ee8f4e0dda343"
+      },
+      {
+        "amount_sats": 462000000,
+        "script_pubkey": "5120147c9c57132f6e7ecddba9800bb0c4449251c92a1e60371ee77557b6620f3ea3"
+      },
+      {
+        "amount_sats": 294000000,
+        "script_pubkey": "76a914751e76e8199196d454941c45d1b3a323f1433bd688ac"
+      },
+      {
+        "amount_sats": 504000000,
+        "script_pubkey": "5120e4d810fd50586274face62b8a807eb9719cef49c04177cc6b76a9a4251d5450e"
+      },
+      {
+        "amount_sats": 630000000,
+        "script_pubkey": "512091b64d5324723a985170e4dc5a0f84c041804f2cd12660fa5dec09fc21783605"
+      },
+      {
+        "amount_sats": 378000000,
+        "script_pubkey": "00147dd65592d0ab2fe0d0257d571abf032cd9db93dc"
+      },
+      {
+        "amount_sats": 672000000,
+        "script_pubkey": "512075169f4001aa68f15bbed28b218df1d0a62cbbcf1188c6665110c293c907b831"
+      },
+      {
+        "amount_sats": 546000000,
+        "script_pubkey": "5120712447206d7a5238acc7ff53fbe94a3b64539ad291c7cdbc490b7577e4b17df5"
+      },
+      {
+        "amount_sats": 588000000,
+        "script_pubkey": "512077e30a5522dd9f894c3f8b8bd4c4b2cf82ca7da8a3ea6a239655c39c050ab220"
+      }
+    ]
+  },
+  {
+    "description": "BIP341 official wallet test vector key-path (all, hash_type 1)",
+    "expected_sighash": "bf013ea93474aa67815b1b6cc441d23b64fa310911d991e713cd34c7f5d46669",
+    "hash_type": 1,
+    "id": "bip341_keypath_all",
+    "input_index": 3,
+    "raw_unsigned_tx": "02000000097de20cbff686da83a54981d2b9bab3586f4ca7e48f57f5b55963115f3b334e9c010000000000000000d7b7cab57b1393ace2d064f4d4a2cb8af6def61273e127517d44759b6dafdd990000000000fffffffff8e1f583384333689228c5d28eac13366be082dc57441760d957275419a418420000000000fffffffff0689180aa63b30cb162a73c6d2a38b7eeda2a83ece74310fda0843ad604853b0100000000feffffffaa5202bdf6d8ccd2ee0f0202afbbb7461d9264a25e5bfd3c5a52ee1239e0ba6c0000000000feffffff956149bdc66faa968eb2be2d2faa29718acbfe3941215893a2a3446d32acd050000000000000000000e664b9773b88c09c32cb70a2a3e4da0ced63b7ba3b22f848531bbb1d5d5f4c94010000000000000000e9aa6b8e6c9de67619e6a3924ae25696bb7b694bb677a632a74ef7eadfd4eabf0000000000ffffffffa778eb6a263dc090464cd125c466b5a99667720b1c110468831d058aa1b82af10100000000ffffffff0200ca9a3b000000001976a91406afd46bcdfd22ef94ac122aa11f241244a37ecc88ac807840cb0000000020ac9a87f5594be208f8532db38cff670c450ed2fea8fcdefcc9a663f78bab962b0065cd1d",
+    "type": "bip341",
+    "utxos_spent": [
+      {
+        "amount_sats": 420000000,
+        "script_pubkey": "512053a1f6e454df1aa2776a2814a721372d6258050de330b3c6d10ee8f4e0dda343"
+      },
+      {
+        "amount_sats": 462000000,
+        "script_pubkey": "5120147c9c57132f6e7ecddba9800bb0c4449251c92a1e60371ee77557b6620f3ea3"
+      },
+      {
+        "amount_sats": 294000000,
+        "script_pubkey": "76a914751e76e8199196d454941c45d1b3a323f1433bd688ac"
+      },
+      {
+        "amount_sats": 504000000,
+        "script_pubkey": "5120e4d810fd50586274face62b8a807eb9719cef49c04177cc6b76a9a4251d5450e"
+      },
+      {
+        "amount_sats": 630000000,
+        "script_pubkey": "512091b64d5324723a985170e4dc5a0f84c041804f2cd12660fa5dec09fc21783605"
+      },
+      {
+        "amount_sats": 378000000,
+        "script_pubkey": "00147dd65592d0ab2fe0d0257d571abf032cd9db93dc"
+      },
+      {
+        "amount_sats": 672000000,
+        "script_pubkey": "512075169f4001aa68f15bbed28b218df1d0a62cbbcf1188c6665110c293c907b831"
+      },
+      {
+        "amount_sats": 546000000,
+        "script_pubkey": "5120712447206d7a5238acc7ff53fbe94a3b64539ad291c7cdbc490b7577e4b17df5"
+      },
+      {
+        "amount_sats": 588000000,
+        "script_pubkey": "512077e30a5522dd9f894c3f8b8bd4c4b2cf82ca7da8a3ea6a239655c39c050ab220"
+      }
+    ]
+  },
+  {
+    "description": "BIP341 official wallet test vector key-path (none, hash_type 2)",
+    "expected_sighash": "15f25c298eb5cdc7eb1d638dd2d45c97c4c59dcaec6679cfc16ad84f30876b85",
+    "hash_type": 2,
+    "id": "bip341_keypath_none",
+    "input_index": 6,
+    "raw_unsigned_tx": "02000000097de20cbff686da83a54981d2b9bab3586f4ca7e48f57f5b55963115f3b334e9c010000000000000000d7b7cab57b1393ace2d064f4d4a2cb8af6def61273e127517d44759b6dafdd990000000000fffffffff8e1f583384333689228c5d28eac13366be082dc57441760d957275419a418420000000000fffffffff0689180aa63b30cb162a73c6d2a38b7eeda2a83ece74310fda0843ad604853b0100000000feffffffaa5202bdf6d8ccd2ee0f0202afbbb7461d9264a25e5bfd3c5a52ee1239e0ba6c0000000000feffffff956149bdc66faa968eb2be2d2faa29718acbfe3941215893a2a3446d32acd050000000000000000000e664b9773b88c09c32cb70a2a3e4da0ced63b7ba3b22f848531bbb1d5d5f4c94010000000000000000e9aa6b8e6c9de67619e6a3924ae25696bb7b694bb677a632a74ef7eadfd4eabf0000000000ffffffffa778eb6a263dc090464cd125c466b5a99667720b1c110468831d058aa1b82af10100000000ffffffff0200ca9a3b000000001976a91406afd46bcdfd22ef94ac122aa11f241244a37ecc88ac807840cb0000000020ac9a87f5594be208f8532db38cff670c450ed2fea8fcdefcc9a663f78bab962b0065cd1d",
+    "type": "bip341",
+    "utxos_spent": [
+      {
+        "amount_sats": 420000000,
+        "script_pubkey": "512053a1f6e454df1aa2776a2814a721372d6258050de330b3c6d10ee8f4e0dda343"
+      },
+      {
+        "amount_sats": 462000000,
+        "script_pubkey": "5120147c9c57132f6e7ecddba9800bb0c4449251c92a1e60371ee77557b6620f3ea3"
+      },
+      {
+        "amount_sats": 294000000,
+        "script_pubkey": "76a914751e76e8199196d454941c45d1b3a323f1433bd688ac"
+      },
+      {
+        "amount_sats": 504000000,
+        "script_pubkey": "5120e4d810fd50586274face62b8a807eb9719cef49c04177cc6b76a9a4251d5450e"
+      },
+      {
+        "amount_sats": 630000000,
+        "script_pubkey": "512091b64d5324723a985170e4dc5a0f84c041804f2cd12660fa5dec09fc21783605"
+      },
+      {
+        "amount_sats": 378000000,
+        "script_pubkey": "00147dd65592d0ab2fe0d0257d571abf032cd9db93dc"
+      },
+      {
+        "amount_sats": 672000000,
+        "script_pubkey": "512075169f4001aa68f15bbed28b218df1d0a62cbbcf1188c6665110c293c907b831"
+      },
+      {
+        "amount_sats": 546000000,
+        "script_pubkey": "5120712447206d7a5238acc7ff53fbe94a3b64539ad291c7cdbc490b7577e4b17df5"
+      },
+      {
+        "amount_sats": 588000000,
+        "script_pubkey": "512077e30a5522dd9f894c3f8b8bd4c4b2cf82ca7da8a3ea6a239655c39c050ab220"
+      }
+    ]
+  },
+  {
+    "description": "BIP341 official wallet test vector key-path (single, hash_type 3)",
+    "expected_sighash": "2514a6272f85cfa0f45eb907fcb0d121b808ed37c6ea160a5a9046ed5526d555",
+    "hash_type": 3,
+    "id": "bip341_keypath_single",
+    "input_index": 0,
+    "raw_unsigned_tx": "02000000097de20cbff686da83a54981d2b9bab3586f4ca7e48f57f5b55963115f3b334e9c010000000000000000d7b7cab57b1393ace2d064f4d4a2cb8af6def61273e127517d44759b6dafdd990000000000fffffffff8e1f583384333689228c5d28eac13366be082dc57441760d957275419a418420000000000fffffffff0689180aa63b30cb162a73c6d2a38b7eeda2a83ece74310fda0843ad604853b0100000000feffffffaa5202bdf6d8ccd2ee0f0202afbbb7461d9264a25e5bfd3c5a52ee1239e0ba6c0000000000feffffff956149bdc66faa968eb2be2d2faa29718acbfe3941215893a2a3446d32acd050000000000000000000e664b9773b88c09c32cb70a2a3e4da0ced63b7ba3b22f848531bbb1d5d5f4c94010000000000000000e9aa6b8e6c9de67619e6a3924ae25696bb7b694bb677a632a74ef7eadfd4eabf0000000000ffffffffa778eb6a263dc090464cd125c466b5a99667720b1c110468831d058aa1b82af10100000000ffffffff0200ca9a3b000000001976a91406afd46bcdfd22ef94ac122aa11f241244a37ecc88ac807840cb0000000020ac9a87f5594be208f8532db38cff670c450ed2fea8fcdefcc9a663f78bab962b0065cd1d",
+    "type": "bip341",
+    "utxos_spent": [
+      {
+        "amount_sats": 420000000,
+        "script_pubkey": "512053a1f6e454df1aa2776a2814a721372d6258050de330b3c6d10ee8f4e0dda343"
+      },
+      {
+        "amount_sats": 462000000,
+        "script_pubkey": "5120147c9c57132f6e7ecddba9800bb0c4449251c92a1e60371ee77557b6620f3ea3"
+      },
+      {
+        "amount_sats": 294000000,
+        "script_pubkey": "76a914751e76e8199196d454941c45d1b3a323f1433bd688ac"
+      },
+      {
+        "amount_sats": 504000000,
+        "script_pubkey": "5120e4d810fd50586274face62b8a807eb9719cef49c04177cc6b76a9a4251d5450e"
+      },
+      {
+        "amount_sats": 630000000,
+        "script_pubkey": "512091b64d5324723a985170e4dc5a0f84c041804f2cd12660fa5dec09fc21783605"
+      },
+      {
+        "amount_sats": 378000000,
+        "script_pubkey": "00147dd65592d0ab2fe0d0257d571abf032cd9db93dc"
+      },
+      {
+        "amount_sats": 672000000,
+        "script_pubkey": "512075169f4001aa68f15bbed28b218df1d0a62cbbcf1188c6665110c293c907b831"
+      },
+      {
+        "amount_sats": 546000000,
+        "script_pubkey": "5120712447206d7a5238acc7ff53fbe94a3b64539ad291c7cdbc490b7577e4b17df5"
+      },
+      {
+        "amount_sats": 588000000,
+        "script_pubkey": "512077e30a5522dd9f894c3f8b8bd4c4b2cf82ca7da8a3ea6a239655c39c050ab220"
+      }
+    ]
+  },
+  {
+    "description": "BIP341 official wallet test vector key-path (all_anyonecanpay, hash_type 129)",
+    "expected_sighash": "cccb739eca6c13a8a89e6e5cd317ffe55669bbda23f2fd37b0f18755e008edd2",
+    "hash_type": 129,
+    "id": "bip341_keypath_all_anyonecanpay",
+    "input_index": 8,
+    "raw_unsigned_tx": "02000000097de20cbff686da83a54981d2b9bab3586f4ca7e48f57f5b55963115f3b334e9c010000000000000000d7b7cab57b1393ace2d064f4d4a2cb8af6def61273e127517d44759b6dafdd990000000000fffffffff8e1f583384333689228c5d28eac13366be082dc57441760d957275419a418420000000000fffffffff0689180aa63b30cb162a73c6d2a38b7eeda2a83ece74310fda0843ad604853b0100000000feffffffaa5202bdf6d8ccd2ee0f0202afbbb7461d9264a25e5bfd3c5a52ee1239e0ba6c0000000000feffffff956149bdc66faa968eb2be2d2faa29718acbfe3941215893a2a3446d32acd050000000000000000000e664b9773b88c09c32cb70a2a3e4da0ced63b7ba3b22f848531bbb1d5d5f4c94010000000000000000e9aa6b8e6c9de67619e6a3924ae25696bb7b694bb677a632a74ef7eadfd4eabf0000000000ffffffffa778eb6a263dc090464cd125c466b5a99667720b1c110468831d058aa1b82af10100000000ffffffff0200ca9a3b000000001976a91406afd46bcdfd22ef94ac122aa11f241244a37ecc88ac807840cb0000000020ac9a87f5594be208f8532db38cff670c450ed2fea8fcdefcc9a663f78bab962b0065cd1d",
+    "type": "bip341",
+    "utxos_spent": [
+      {
+        "amount_sats": 420000000,
+        "script_pubkey": "512053a1f6e454df1aa2776a2814a721372d6258050de330b3c6d10ee8f4e0dda343"
+      },
+      {
+        "amount_sats": 462000000,
+        "script_pubkey": "5120147c9c57132f6e7ecddba9800bb0c4449251c92a1e60371ee77557b6620f3ea3"
+      },
+      {
+        "amount_sats": 294000000,
+        "script_pubkey": "76a914751e76e8199196d454941c45d1b3a323f1433bd688ac"
+      },
+      {
+        "amount_sats": 504000000,
+        "script_pubkey": "5120e4d810fd50586274face62b8a807eb9719cef49c04177cc6b76a9a4251d5450e"
+      },
+      {
+        "amount_sats": 630000000,
+        "script_pubkey": "512091b64d5324723a985170e4dc5a0f84c041804f2cd12660fa5dec09fc21783605"
+      },
+      {
+        "amount_sats": 378000000,
+        "script_pubkey": "00147dd65592d0ab2fe0d0257d571abf032cd9db93dc"
+      },
+      {
+        "amount_sats": 672000000,
+        "script_pubkey": "512075169f4001aa68f15bbed28b218df1d0a62cbbcf1188c6665110c293c907b831"
+      },
+      {
+        "amount_sats": 546000000,
+        "script_pubkey": "5120712447206d7a5238acc7ff53fbe94a3b64539ad291c7cdbc490b7577e4b17df5"
+      },
+      {
+        "amount_sats": 588000000,
+        "script_pubkey": "512077e30a5522dd9f894c3f8b8bd4c4b2cf82ca7da8a3ea6a239655c39c050ab220"
+      }
+    ]
+  },
+  {
+    "description": "BIP341 official wallet test vector key-path (none_anyonecanpay, hash_type 130)",
+    "expected_sighash": "cd292de50313804dabe4685e83f923d2969577191a3e1d2882220dca88cbeb10",
+    "hash_type": 130,
+    "id": "bip341_keypath_none_anyonecanpay",
+    "input_index": 7,
+    "raw_unsigned_tx": "02000000097de20cbff686da83a54981d2b9bab3586f4ca7e48f57f5b55963115f3b334e9c010000000000000000d7b7cab57b1393ace2d064f4d4a2cb8af6def61273e127517d44759b6dafdd990000000000fffffffff8e1f583384333689228c5d28eac13366be082dc57441760d957275419a418420000000000fffffffff0689180aa63b30cb162a73c6d2a38b7eeda2a83ece74310fda0843ad604853b0100000000feffffffaa5202bdf6d8ccd2ee0f0202afbbb7461d9264a25e5bfd3c5a52ee1239e0ba6c0000000000feffffff956149bdc66faa968eb2be2d2faa29718acbfe3941215893a2a3446d32acd050000000000000000000e664b9773b88c09c32cb70a2a3e4da0ced63b7ba3b22f848531bbb1d5d5f4c94010000000000000000e9aa6b8e6c9de67619e6a3924ae25696bb7b694bb677a632a74ef7eadfd4eabf0000000000ffffffffa778eb6a263dc090464cd125c466b5a99667720b1c110468831d058aa1b82af10100000000ffffffff0200ca9a3b000000001976a91406afd46bcdfd22ef94ac122aa11f241244a37ecc88ac807840cb0000000020ac9a87f5594be208f8532db38cff670c450ed2fea8fcdefcc9a663f78bab962b0065cd1d",
+    "type": "bip341",
+    "utxos_spent": [
+      {
+        "amount_sats": 420000000,
+        "script_pubkey": "512053a1f6e454df1aa2776a2814a721372d6258050de330b3c6d10ee8f4e0dda343"
+      },
+      {
+        "amount_sats": 462000000,
+        "script_pubkey": "5120147c9c57132f6e7ecddba9800bb0c4449251c92a1e60371ee77557b6620f3ea3"
+      },
+      {
+        "amount_sats": 294000000,
+        "script_pubkey": "76a914751e76e8199196d454941c45d1b3a323f1433bd688ac"
+      },
+      {
+        "amount_sats": 504000000,
+        "script_pubkey": "5120e4d810fd50586274face62b8a807eb9719cef49c04177cc6b76a9a4251d5450e"
+      },
+      {
+        "amount_sats": 630000000,
+        "script_pubkey": "512091b64d5324723a985170e4dc5a0f84c041804f2cd12660fa5dec09fc21783605"
+      },
+      {
+        "amount_sats": 378000000,
+        "script_pubkey": "00147dd65592d0ab2fe0d0257d571abf032cd9db93dc"
+      },
+      {
+        "amount_sats": 672000000,
+        "script_pubkey": "512075169f4001aa68f15bbed28b218df1d0a62cbbcf1188c6665110c293c907b831"
+      },
+      {
+        "amount_sats": 546000000,
+        "script_pubkey": "5120712447206d7a5238acc7ff53fbe94a3b64539ad291c7cdbc490b7577e4b17df5"
+      },
+      {
+        "amount_sats": 588000000,
+        "script_pubkey": "512077e30a5522dd9f894c3f8b8bd4c4b2cf82ca7da8a3ea6a239655c39c050ab220"
+      }
+    ]
+  },
+  {
+    "description": "BIP341 official wallet test vector key-path (single_anyonecanpay, hash_type 131)",
+    "expected_sighash": "325a644af47e8a5a2591cda0ab0723978537318f10e6a63d4eed783b96a71a4d",
+    "hash_type": 131,
+    "id": "bip341_keypath_single_anyonecanpay",
+    "input_index": 1,
+    "raw_unsigned_tx": "02000000097de20cbff686da83a54981d2b9bab3586f4ca7e48f57f5b55963115f3b334e9c010000000000000000d7b7cab57b1393ace2d064f4d4a2cb8af6def61273e127517d44759b6dafdd990000000000fffffffff8e1f583384333689228c5d28eac13366be082dc57441760d957275419a418420000000000fffffffff0689180aa63b30cb162a73c6d2a38b7eeda2a83ece74310fda0843ad604853b0100000000feffffffaa5202bdf6d8ccd2ee0f0202afbbb7461d9264a25e5bfd3c5a52ee1239e0ba6c0000000000feffffff956149bdc66faa968eb2be2d2faa29718acbfe3941215893a2a3446d32acd050000000000000000000e664b9773b88c09c32cb70a2a3e4da0ced63b7ba3b22f848531bbb1d5d5f4c94010000000000000000e9aa6b8e6c9de67619e6a3924ae25696bb7b694bb677a632a74ef7eadfd4eabf0000000000ffffffffa778eb6a263dc090464cd125c466b5a99667720b1c110468831d058aa1b82af10100000000ffffffff0200ca9a3b000000001976a91406afd46bcdfd22ef94ac122aa11f241244a37ecc88ac807840cb0000000020ac9a87f5594be208f8532db38cff670c450ed2fea8fcdefcc9a663f78bab962b0065cd1d",
+    "type": "bip341",
+    "utxos_spent": [
+      {
+        "amount_sats": 420000000,
+        "script_pubkey": "512053a1f6e454df1aa2776a2814a721372d6258050de330b3c6d10ee8f4e0dda343"
+      },
+      {
+        "amount_sats": 462000000,
+        "script_pubkey": "5120147c9c57132f6e7ecddba9800bb0c4449251c92a1e60371ee77557b6620f3ea3"
+      },
+      {
+        "amount_sats": 294000000,
+        "script_pubkey": "76a914751e76e8199196d454941c45d1b3a323f1433bd688ac"
+      },
+      {
+        "amount_sats": 504000000,
+        "script_pubkey": "5120e4d810fd50586274face62b8a807eb9719cef49c04177cc6b76a9a4251d5450e"
+      },
+      {
+        "amount_sats": 630000000,
+        "script_pubkey": "512091b64d5324723a985170e4dc5a0f84c041804f2cd12660fa5dec09fc21783605"
+      },
+      {
+        "amount_sats": 378000000,
+        "script_pubkey": "00147dd65592d0ab2fe0d0257d571abf032cd9db93dc"
+      },
+      {
+        "amount_sats": 672000000,
+        "script_pubkey": "512075169f4001aa68f15bbed28b218df1d0a62cbbcf1188c6665110c293c907b831"
+      },
+      {
+        "amount_sats": 546000000,
+        "script_pubkey": "5120712447206d7a5238acc7ff53fbe94a3b64539ad291c7cdbc490b7577e4b17df5"
+      },
+      {
+        "amount_sats": 588000000,
+        "script_pubkey": "512077e30a5522dd9f894c3f8b8bd4c4b2cf82ca7da8a3ea6a239655c39c050ab220"
+      }
+    ]
+  },
+  {
+    "chain": "bip122:000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+    "description": "Composite 4-input PSBT spending P2PKH, P2SH-P2WPKH, P2WPKH, and P2TR (Taproot BIP86 key-path) inputs",
+    "id": "bitcoin_psbt_composite_4input",
+    "input_paths": [
+      "m/44'/0'/0'/0/0",
+      "m/49'/0'/0'/0/0",
+      "m/84'/0'/0'/0/0",
+      "m/86'/0'/0'/0/0"
+    ],
+    "parsed": {
+      "details": {
+        "chain": "bip122:000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+        "fee_satoshis": 50000,
+        "inputs": [
+          {
+            "amount_sats": 100000,
+            "index": 0,
+            "script_type": "P2PKH",
+            "sequence": 4294967293,
+            "txid": "c1cad28a9b78a2b2cab2f48f8f0dcab790a396d58e2d03510b44b0f6633ebe33",
+            "vout": 0
+          },
+          {
+            "amount_sats": 150000,
+            "index": 1,
+            "script_type": "P2SH-P2WPKH",
+            "sequence": 4294967293,
+            "txid": "db96531b593b64a1332bccde5a5fe9dd75e07998369c1c6db2a3a1a5be04ae51",
+            "vout": 0
+          },
+          {
+            "amount_sats": 200000,
+            "index": 2,
+            "script_type": "P2WPKH",
+            "sequence": 4294967293,
+            "txid": "0f9ee308b11ce012ed60151228b330c851430b96186e5ad1b1b132811491485a",
+            "vout": 0
+          },
+          {
+            "amount_sats": 300000,
+            "index": 3,
+            "script_type": "P2TR",
+            "sequence": 4294967293,
+            "txid": "4444444444444444444444444444444444444444444444444444444444444444",
+            "vout": 0
+          }
+        ],
+        "locktime": 0,
+        "outputs": [
+          {
+            "address": "bc1q42aueh0wlugjyv6y24n80zyeqqfrg4ncmw3c9f",
+            "index": 0,
+            "script_pubkey": "0014aabbccddeeff1122334455667788990012345678",
+            "value_sats": 700000
+          }
+        ],
+        "total_inputs_satoshis": 750000,
+        "total_outputs_satoshis": 700000,
+        "version": 2
+      },
+      "fee": {
+        "amount": "50000",
+        "asset": "satoshis"
+      },
+      "sequence": {
+        "sequence": 4294967293
+      },
+      "transfers": [
+        {
+          "amount": "700000",
+          "asset": "BTC",
+          "from": "1EujKZ3hckXqjEy7TwE1FrVcLKM7k923E1",
+          "to": "bc1q42aueh0wlugjyv6y24n80zyeqqfrg4ncmw3c9f"
+        }
+      ]
+    },
+    "public_keys": [
+      "0x03e93e38d9069fea998726eb25a5e9bdaadae9161ef8e63508dba807334dced88b",
+      "0x02806fed4f8f7b56bb67e493388ac74361155df43b8d3ef5a87f03c8d379db7af7",
+      "0x0296275358bb0d185b5465763f029abc6741d329261adbb7a0d4c8562e280a1969",
+      "0x0279b9c9c2397fd1e2de37548ea2eeb25860dbab0ec90c595196bfa7faf767e812"
+    ],
+    "raw_psbt": "0x70736274ff0100cd020000000433be3e63f6b0440b51032d8ed596a390b7ca0d8f8ff4b2cab2a2789b8ad2cac10000000000fdffffff51ae04bea5a1a3b26d1c9c369879e075dde95f5adecc2b33a1643b591b5396db0000000000fdffffff5a4891148132b1b1d15a6e18960b4351c830b328121560ed12e01cb108e39e0f0000000000fdffffff44444444444444444444444444444444444444444444444444444444444444440000000000fdffffff0160ae0a0000000000160014aabbccddeeff11223344556677889900123456780000000000010055020000000101010101010101010101010101010101010101010101010101010101010101010000000000ffffffff01a0860100000000001976a91498929790b097daf46f19f0abe059f802a8fbe4b688ac0000000001030401000000220603e93e38d9069fea998726eb25a5e9bdaadae9161ef8e63508dba807334dced88b18785634122c0000800000008000000080000000000000000000010053020000000102020202020202020202020202020202020202020202020202020202020202020000000000ffffffff01f04902000000000017a914b2a8b4f28a5a646956469f9c55464c594b5090f887000000000103040100000001041600140e7753ad0af037ecc694f72c5a5ff686fe84431f220602806fed4f8f7b56bb67e493388ac74361155df43b8d3ef5a87f03c8d379db7af71878563412310000800000008000000080000000000000000000010052020000000103030303030303030303030303030303030303030303030303030303030303030000000000ffffffff01400d030000000000160014f8963352ed6409403fae838eb6087857bba8a5b30000000001011f400d030000000000160014f8963352ed6409403fae838eb6087857bba8a5b30103040100000022060296275358bb0d185b5465763f029abc6741d329261adbb7a0d4c8562e280a1969187856341254000080000000800000008000000000000000000001012be093040000000000225120bf14a0130c95864971d726d77829970ab1dfa7668717d5cb7bc654e9a5cc1c1a0103040000000022060279b9c9c2397fd1e2de37548ea2eeb25860dbab0ec90c595196bfa7faf767e8121878563412560000800000008000000080000000000000000001172079b9c9c2397fd1e2de37548ea2eeb25860dbab0ec90c595196bfa7faf767e8120000",
+    "signatures": [
+      "0x3044022026e78d0d4d7eb659700089131a29fa7a325ae3d2624d2c7b579531334e20f72402201ea86a75d46558aea684edf6f827565b55534949332fcba1bb6a074eadd1114901",
+      "0x30440220547338616017debe37c3d7d05017246f94d62091e778567b1a17d19d4157853302202106117a102cde00fdbed6142f0d696093748f6d442f76a81451dd76b92b621301",
+      "0x3045022100eb0048b9024ee7e63ff08dc93f2127ed499810a19f104db3e3d8a23a681171c20220674414f54422df780638368fa57606177e0427abe5203c0dbd0589f74da1b60401",
+      "0x843aaa18d3f03ab2841c4215ce81f3b908b0e1f1d742cde4b26f9184d305f8e6f4ea31490a25575714f6469ce0a899e826f1037b6ce608d5035ac059835a8eda"
+    ],
+    "signer_address": "1EujKZ3hckXqjEy7TwE1FrVcLKM7k923E1",
+    "signing_in_hsm": false,
+    "signing_inputs": [
+      "0x06e83fc81164cf02e3f1a25ad1273d4aff1e26b238ef7b1dfcb14e938d51cf11",
+      "0x41480ac6c3f14a6cffb4c2ef7422c108b8c3ba7016898f4db9442ed676b41490",
+      "0x8a7bc334d094170ea1a597e42e8541180bf2980a50638a3ad796214e0790486c",
+      "0x8b0af45bb685ea5a41202819f15a98243d798bbd10a76e48676e0af88db4173c"
+    ],
+    "type": "psbt"
+  }
+]

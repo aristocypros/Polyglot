@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# tools/pe-sim/pe-sim - Policy Engine Stand-In CLI launcher
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BIN="${SCRIPT_DIR}/target/release/pe-sim"
+
+if [ ! -f "${BIN}" ]; then
+    BIN="${SCRIPT_DIR}/target/debug/pe-sim"
+fi
+
+if [ ! -f "${BIN}" ]; then
+    cargo build --manifest-path "${SCRIPT_DIR}/Cargo.toml" --offline --quiet
+    BIN="${SCRIPT_DIR}/target/debug/pe-sim"
+fi
+
+exec "${BIN}" "$@"

@@ -1,0 +1,713 @@
+<title>Polyglot Signing Middleware</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single reading column (~72ch) with wide breakout bands for diagrams and tables; zones colour-coded untrusted (amber) vs enclave (green). */
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --ink: #15181f;
+  --muted: #5a6170;
+  --line: #d9dce3;
+  --accent: #2b47c4;
+  --accent-soft: #e6eafb;
+  --untrusted: #a8670f;
+  --untrusted-soft: #fbf0de;
+  --trusted: #237a52;
+  --trusted-soft: #e1f2e9;
+  --danger: #b4322f;
+  --danger-soft: #fae4e3;
+  --f-display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1116; --surface: #171a21; --ink: #e7e9ee; --muted: #9aa1b0; --line: #2a2f3a;
+    --accent: #8fa2ff; --accent-soft: #1f2645;
+    --untrusted: #e2a64e; --untrusted-soft: #2d2415;
+    --trusted: #5ccf98; --trusted-soft: #142a20;
+    --danger: #f07a75; --danger-soft: #331a1a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1116; --surface: #171a21; --ink: #e7e9ee; --muted: #9aa1b0; --line: #2a2f3a;
+  --accent: #8fa2ff; --accent-soft: #1f2645;
+  --untrusted: #e2a64e; --untrusted-soft: #2d2415;
+  --trusted: #5ccf98; --trusted-soft: #142a20;
+  --danger: #f07a75; --danger-soft: #331a1a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+.wrap { max-width: 1040px; margin: 0 auto; }
+.col { max-width: 70ch; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 1.1rem; font-weight: 500; }
+p { margin: 0; }
+code, .mono { font-family: var(--f-mono); font-size: 0.88em; }
+code { background: var(--accent-soft); padding: 0.05em 0.35em; border-radius: 4px; }
+.eyebrow { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+section { padding-block: 56px 8px; display: grid; gap: 20px; border-top: 1px solid var(--line); margin-top: 48px; }
+.lede { font-size: 1.15rem; color: var(--muted); }
+
+/* hero */
+header { padding-block: 56px 8px; display: grid; gap: 20px; }
+.tagline { font-size: 1.25rem; max-width: 60ch; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-family: var(--f-mono); font-size: 0.78rem; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--surface); }
+.claim { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 8px; }
+.claim div { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.claim b { display: block; font-family: var(--f-display); font-weight: 500; font-size: 1.05rem; }
+.claim span { color: var(--muted); font-size: 0.92rem; }
+
+/* diagram */
+.scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.diagram { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+svg text { font-family: var(--f-body); }
+.z-untrusted { fill: var(--untrusted-soft); stroke: var(--untrusted); }
+.z-trusted { fill: var(--trusted-soft); stroke: var(--trusted); }
+.z-ext { fill: none; stroke: var(--line); }
+.node { fill: var(--surface); stroke: var(--ink); stroke-width: 1.2; }
+.node-hsm { fill: var(--surface); stroke: var(--trusted); stroke-width: 2; }
+.t-title { fill: var(--ink); font-weight: 600; font-size: 14px; }
+.t-sub { fill: var(--muted); font-size: 11.5px; }
+.t-zone-u { fill: var(--untrusted); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; }
+.t-zone-t { fill: var(--trusted); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; }
+.t-zone-e { fill: var(--muted); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; }
+.edge { stroke: var(--muted); stroke-width: 1.4; fill: none; }
+.edge-a { stroke: var(--accent); stroke-width: 1.6; fill: none; }
+.t-edge { fill: var(--accent); font-family: var(--f-mono); font-size: 10.5px; }
+.ah { fill: var(--accent); }
+.ah-m { fill: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.88rem; color: var(--muted); }
+.sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 6px; border: 1.5px solid; }
+
+/* flow */
+ol.flow { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; counter-reset: f; }
+ol.flow li { counter-increment: f; display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px dashed var(--line); }
+ol.flow li::before { content: counter(f); font-family: var(--f-mono); font-size: 0.85rem; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); font-weight: 500; }
+ol.flow li > div { min-width: 0; }
+.who { font-family: var(--f-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.who.u { color: var(--untrusted); } .who.t { color: var(--trusted); } .who.e { color: var(--muted); }
+
+/* checklist simulator */
+.sim { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 720px) { .sim { grid-template-columns: 1fr; } }
+.attacks { display: grid; gap: 6px; }
+.attacks button {
+  font: inherit; font-size: 0.92rem; text-align: left; cursor: pointer;
+  background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 9px 12px;
+}
+.attacks button:hover { border-color: var(--accent); }
+.attacks button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--ink); }
+.attacks button:focus-visible, .steps li:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.steps li {
+  display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: start;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px;
+  transition: opacity .2s, border-color .2s, background .2s;
+}
+.steps .n { font-family: var(--f-mono); color: var(--muted); font-size: 0.85rem; padding-top: 2px; }
+.steps .s-body { min-width: 0; }
+.steps .s-body b { font-weight: 600; }
+.steps .s-body span { display: block; color: var(--muted); font-size: 0.88rem; }
+.steps .badge { font-family: var(--f-mono); font-size: 0.72rem; padding: 2px 8px; border-radius: 999px; white-space: nowrap; visibility: hidden; }
+.steps li.pass .badge { visibility: visible; background: var(--trusted-soft); color: var(--trusted); }
+.steps li.fail { border-color: var(--danger); background: var(--danger-soft); }
+.steps li.fail .badge { visibility: visible; background: var(--danger); color: var(--surface); }
+.steps li.skip { opacity: 0.4; }
+.verdict { font-size: 0.95rem; border-left: 3px solid var(--accent); padding: 8px 12px; background: var(--surface); border-radius: 0 6px 6px 0; }
+.verdict .mono { color: var(--danger); }
+@media (prefers-reduced-motion: reduce) { .steps li { transition: none; } }
+
+/* tables */
+table { border-collapse: collapse; width: 100%; font-size: 0.92rem; background: var(--surface); }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--f-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 500; background: var(--bg); }
+.tbl { border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; }
+.tbl table { min-width: 680px; }
+td.risk { color: var(--muted); }
+.yes { color: var(--trusted); font-family: var(--f-mono); font-size: 0.82rem; }
+.no { color: var(--untrusted); font-family: var(--f-mono); font-size: 0.82rem; }
+
+/* seed blob */
+.blob { display: grid; grid-template-columns: 12fr 64fr 16fr; border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; font-family: var(--f-mono); font-size: 0.8rem; }
+.blob div { padding: 12px 8px; text-align: center; min-width: 0; }
+.blob .iv { background: var(--accent-soft); color: var(--accent); }
+.blob .ct { background: var(--surface); border-inline: 1.5px solid var(--ink); }
+.blob .tag { background: var(--trusted-soft); color: var(--trusted); }
+.blob small { display: block; color: var(--muted); font-size: 0.7rem; }
+.aad { font-family: var(--f-mono); font-size: 0.9rem; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; overflow-x: auto; white-space: nowrap; }
+.aad .sep { color: var(--muted); }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.two > div { min-width: 0; display: grid; gap: 10px; align-content: start; }
+
+/* levels */
+.levels { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.lvl { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: grid; gap: 6px; }
+.lvl.now { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.lvl .mono { color: var(--accent); font-weight: 500; }
+.lvl span { color: var(--muted); font-size: 0.9rem; }
+.limits { display: grid; gap: 10px; padding: 0; margin: 0; list-style: none; }
+.limits li { padding-left: 18px; position: relative; }
+.limits li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 8px; height: 8px; border-radius: 2px; background: var(--untrusted); }
+
+/* states */
+.states { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 0.85rem; }
+.st { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+.st.ok { border-color: var(--trusted); color: var(--trusted); }
+.st.bad { border-color: var(--danger); color: var(--danger); }
+.arr { color: var(--muted); }
+
+pre { margin: 0; font-family: var(--f-mono); font-size: 0.85rem; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; overflow-x: auto; line-height: 1.5; }
+pre .c { color: var(--muted); }
+.scope { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.scope ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+.scope > div { min-width: 0; }
+.scope h3 { margin-bottom: 8px; }
+/* derivation explorer */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tabs button { font: inherit; font-size: 0.92rem; cursor: pointer; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; }
+.tabs button:hover { border-color: var(--accent); }
+.tabs button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.tabs button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.dv-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; }
+.dv-path { font-family: var(--f-mono); font-size: 1.3rem; font-weight: 500; }
+.dv-scheme { font-family: var(--f-mono); font-size: 0.8rem; color: var(--muted); }
+.segs { display: grid; grid-template-columns: 70px repeat(5, minmax(110px, 1fr)); gap: 6px; min-width: 660px; }
+.seg { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 10px; display: grid; gap: 2px; }
+.seg.h { border-color: var(--accent); }
+.seg .v { font-family: var(--f-mono); font-size: 1rem; font-weight: 500; }
+.seg .m { font-size: 0.82rem; color: var(--muted); }
+.seg .u { font-family: var(--f-mono); font-size: 0.72rem; color: var(--muted); }
+.seg .hb { font-family: var(--f-mono); font-size: 0.68rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+.seg.root { background: var(--trusted-soft); border-color: var(--trusted); }
+.pipe { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.pipe li { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-bottom: 1px dashed var(--line); }
+@media (max-width: 600px) { .pipe li { grid-template-columns: 1fr; gap: 4px; } }
+.pipe .where { font-family: var(--f-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; padding-top: 3px; }
+.pipe .where.t { color: var(--trusted); } .pipe .where.c { color: var(--accent); } .pipe .where.e { color: var(--muted); }
+.pipe b { font-weight: 600; }
+.pipe .f { display: block; font-family: var(--f-mono); font-size: 0.82rem; color: var(--muted); margin-top: 4px; overflow-x: auto; white-space: nowrap; }
+.dv-note { font-size: 0.92rem; color: var(--muted); }
+
+/* secrets */
+.sec table { min-width: 860px; }
+.sec td.hold, .sec th.hold { text-align: center; width: 72px; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+.dot.ro { background: none; border: 2px solid var(--accent); }
+.dot.warn { background: var(--untrusted); }
+.sec .file { display: block; font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+.sec .kind { font-family: var(--f-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.sec tr.group td { background: var(--bg); font-family: var(--f-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); padding-block: 6px; }
+.callouts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.callout { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.callout.warn { border-color: var(--untrusted); background: var(--untrusted-soft); }
+.callout ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-size: 0.93rem; }
+footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Generic tier · prototype · Oct 2026</div>
+  <h1>Polyglot</h1>
+  <p class="tagline">A multi-chain HD wallet signing service that only signs what your policy engine has signed first. The API and database are treated as hostile; keys live behind a PKCS#11 HSM and a Rust signer with no open ports.</p>
+  <div class="chips">
+    <span class="chip">BIP32 secp256k1</span><span class="chip">SLIP10 ed25519</span><span class="chip">PKCS#11 · SoftHSMv2</span><span class="chip">AES-256-GCM</span><span class="chip">RFC 8785 JCS</span><span class="chip">Go API</span><span class="chip">Rust signer</span><span class="chip">Postgres 16</span>
+  </div>
+  <div class="claim">
+    <div><b>Can't forge</b><span>A fully compromised API cannot produce a signature.</span></div>
+    <div><b>Can't swap</b><span>A DB operator cannot move a seed from one wallet to another.</span></div>
+    <div><b>Can't replay</b><span>An old authorization is refused by a signer-owned table.</span></div>
+    <div><b>Can't extract</b><span>Seeds sit in Postgres wrapped under a non-extractable HSM key.</span></div>
+  </div>
+</header>
+
+<section id="what">
+  <div class="eyebrow">What it is</div>
+  <h2>Signing middleware for custody workflows</h2>
+  <div class="col" style="display:grid;gap:14px">
+    <p>Institutions that hold crypto assets need a service that turns "this transfer is approved" into a valid blockchain signature, across many chains, without trusting every system in between. Polyglot is that service.</p>
+    <p>It creates HD wallets, derives keys by path on demand, and signs raw transactions for <b>Bitcoin, Ethereum and EVM networks, Solana, Tron and the XRP Ledger</b>. It does not decide what is allowed. Your <b>policy engine</b> makes that call and signs the request; Polyglot checks that signature itself and refuses anything else.</p>
+    <p>The prototype is vendor-neutral: it uses only standard PKCS#11, so moving from SoftHSMv2 to Utimaco, CloudHSM or YubiHSM2 is a change of four config values.</p>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="eyebrow">Architecture</div>
+  <h2>Two trust zones, one direction of trust</h2>
+  <p class="col lede">Three services and a one-shot bootstrap job run in Docker Compose. The signer has no inbound ports and no internet route. It reaches out to the API to claim work.</p>
+  <div class="diagram scroll">
+    <svg viewBox="0 0 960 430" width="960" height="430" role="img" aria-label="Architecture: client and policy engine outside; API and Postgres in the untrusted zone; signer, HSM and trust config in the enclave zone">
+      <defs>
+        <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker>
+        <marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ah-m"/></marker>
+      </defs>
+      <!-- external -->
+      <rect x="10" y="20" width="200" height="390" rx="10" class="z-ext" stroke-dasharray="4 4"/>
+      <text x="26" y="42" class="t-zone-e">HOST / CLIENT</text>
+      <rect x="30" y="70" width="160" height="70" rx="8" class="node"/>
+      <text x="44" y="98" class="t-title">Client app</text>
+      <text x="44" y="118" class="t-sub">builds request body</text>
+      <rect x="30" y="250" width="160" height="80" rx="8" class="node"/>
+      <text x="44" y="278" class="t-title">Policy engine</text>
+      <text x="44" y="298" class="t-sub">pe-sim in dev</text>
+      <text x="44" y="314" class="t-sub">Ed25519 / ES256 keys</text>
+      <!-- untrusted -->
+      <rect x="240" y="20" width="300" height="390" rx="10" class="z-untrusted" stroke-width="1.5"/>
+      <text x="256" y="42" class="t-zone-u">UNTRUSTED ZONE</text>
+      <rect x="265" y="70" width="250" height="90" rx="8" class="node"/>
+      <text x="280" y="98" class="t-title">Go API</text>
+      <text x="280" y="118" class="t-sub">:8080 public  /v1/…</text>
+      <text x="280" y="136" class="t-sub">:8081 internal  /internal/claim, results</text>
+      <rect x="265" y="230" width="250" height="150" rx="8" class="node"/>
+      <text x="280" y="258" class="t-title">PostgreSQL 16</text>
+      <text x="280" y="282" class="t-sub">app.*  (api_role)</text>
+      <text x="280" y="298" class="t-sub">wallets · requests · audit_log</text>
+      <line x1="280" y1="314" x2="500" y2="314" stroke="var(--line)"/>
+      <text x="280" y="336" class="t-sub">signer.*  (signer_role only)</text>
+      <text x="280" y="352" class="t-sub">replay · results · signer_audit</text>
+      <!-- trusted -->
+      <rect x="570" y="20" width="380" height="390" rx="10" class="z-trusted" stroke-width="1.5"/>
+      <text x="586" y="42" class="t-zone-t">ENCLAVE ZONE · NO PORTS · NO INTERNET</text>
+      <rect x="600" y="70" width="320" height="110" rx="8" class="node"/>
+      <text x="616" y="98" class="t-title">Rust signer</text>
+      <text x="616" y="118" class="t-sub">9-step envelope verifier</text>
+      <text x="616" y="134" class="t-sub">BIP32 / SLIP10 derivation</text>
+      <text x="616" y="150" class="t-sub">5 chain codecs</text>
+      <rect x="600" y="230" width="190" height="150" rx="8" class="node-hsm"/>
+      <text x="616" y="258" class="t-title">PKCS#11 HSM</text>
+      <text x="616" y="278" class="t-sub">SoftHSMv2 in dev</text>
+      <text x="616" y="298" class="t-sub">kek-v1 AES-256</text>
+      <text x="616" y="314" class="t-sub">non-extractable</text>
+      <text x="616" y="336" class="t-sub">C_Decrypt · C_Sign</text>
+      <text x="616" y="352" class="t-sub">C_DestroyObject</text>
+      <rect x="805" y="230" width="125" height="80" rx="8" class="node"/>
+      <text x="818" y="258" class="t-title">signer.yaml</text>
+      <text x="818" y="278" class="t-sub">read-only</text>
+      <text x="818" y="294" class="t-sub">pinned PE keys</text>
+      <!-- edges -->
+      <path d="M110 140 L110 250" class="edge-a" marker-end="url(#a)"/>
+      <text x="118" y="190" class="t-edge">1 authorize</text>
+      <path d="M90 250 L90 140" class="edge-a" marker-end="url(#a)"/>
+      <text x="22" y="215" class="t-edge">2 envelope</text>
+      <path d="M190 100 L265 100" class="edge-a" marker-end="url(#a)"/>
+      <text x="196" y="92" class="t-edge">3 POST</text>
+      <path d="M390 160 L390 230" class="edge" marker-end="url(#m)" marker-start="url(#m)"/>
+      <path d="M600 110 L515 110" class="edge-a" marker-end="url(#a)"/>
+      <text x="522" y="102" class="t-edge">4 claim</text>
+      <path d="M515 140 L600 140" class="edge-a" marker-end="url(#a)"/>
+      <text x="530" y="156" class="t-edge">7 result</text>
+      <path d="M680 180 L680 230" class="edge-a" marker-end="url(#a)" marker-start="url(#a)"/>
+      <text x="688" y="210" class="t-edge">6 unwrap / sign</text>
+      <path d="M860 230 L860 180" class="edge" marker-end="url(#m)"/>
+      <path d="M600 165 C 560 200, 540 330, 515 336" class="edge-a" marker-end="url(#a)"/>
+      <text x="519" y="300" class="t-edge">5 replay</text>
+    </svg>
+  </div>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--untrusted-soft);border-color:var(--untrusted)"></i>Can delay or drop requests, cannot sign</span>
+    <span><i class="sw" style="background:var(--trusted-soft);border-color:var(--trusted)"></i>Only place a signature can be produced</span>
+  </div>
+</section>
+
+<section id="flow">
+  <div class="eyebrow">Request lifecycle</div>
+  <h2>How one signature gets made</h2>
+  <p class="col lede">Every operation (<code>create_wallet</code>, <code>derive_public</code>, <code>sign</code>) is asynchronous. The client submits, then polls.</p>
+  <ol class="flow col">
+    <li><div><div class="who e">Client → policy engine</div>The client builds a canonical JSON body (RFC 8785). The policy engine evaluates it and, if allowed, signs those exact bytes with Ed25519 or ES256.</div></li>
+    <li><div><div class="who u">Client → API</div><code>POST /v1/requests</code> with the envelope. The API checks shape and size only, stores it as <code>ready</code>, and returns <code>202</code>.</div></li>
+    <li><div><div class="who t">Signer → API</div>The signer long-polls <code>/internal/claim</code>. Postgres hands out the next request with <code>FOR UPDATE SKIP LOCKED</code> and a 60-second lease.</div></li>
+    <li><div><div class="who t">Signer</div>Runs the 9-step verification checklist below. Any failure ends the request with zero signatures.</div></li>
+    <li><div><div class="who t">Signer → HSM</div>Unwraps the seed with <code>C_Decrypt</code>, derives the child key, loads it as a short-lived session object, calls <code>C_Sign</code>, then destroys it and wipes memory.</div></li>
+    <li><div><div class="who t">Signer → API</div>Signs its own response with its Ed25519 identity key, stores it, and posts it to <code>/internal/results</code>.</div></li>
+    <li><div><div class="who e">Client</div><code>GET /v1/requests/{id}</code> returns the result. The client verifies <code>signer_sig</code> against the key published at <code>GET /v1/signer</code>.</div></li>
+  </ol>
+</section>
+
+<section id="checklist">
+  <div class="eyebrow">Verification</div>
+  <h2>The 9-step checklist, under attack</h2>
+  <p class="col lede">The signer runs these checks in order and fails closed. Pick an attack to see where it is stopped.</p>
+  <div class="sim">
+    <div class="attacks" id="attacks" role="group" aria-label="Attacks"></div>
+    <div style="display:grid;gap:12px;min-width:0">
+      <ol class="steps" id="steps"></ol>
+      <div class="verdict" id="verdict" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section id="threats">
+  <div class="eyebrow">Security model</div>
+  <h2>Threats and controls</h2>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Threat</th><th>Control</th><th>Residual risk</th></tr></thead>
+      <tbody>
+        <tr><td><b>Compromised API</b></td><td>Signer verifies the policy engine's signature over the canonical body and never trusts API metadata.</td><td class="risk">Denial of service only.</td></tr>
+        <tr><td><b>Database stolen</b></td><td>Seeds are AES-GCM wrapped under <code>kek-v1</code>, a non-extractable, sensitive HSM key.</td><td class="risk">Database plus HSM PIN together could unwrap.</td></tr>
+        <tr><td><b>Seed swapped between wallets</b></td><td>AEAD associated data is rebuilt from the signed body, never from the DB row.</td><td class="risk">None. GCM tag check fails.</td></tr>
+        <tr><td><b>Replay</b></td><td>Unique <code>request_id</code> and nonce recorded in <code>signer.replay</code> before execution. <code>api_role</code> has no access to the signer schema.</td><td class="risk">Signer DB credentials must stay isolated.</td></tr>
+        <tr><td><b>Policy engine key stolen</b></td><td>Key IDs, algorithms and validity windows pinned in a read-only config. <code>alg: none</code>, mismatched alg and unknown <code>crit</code> headers rejected.</td><td class="risk">The holder of an active key can authorize anything.</td></tr>
+        <tr><td><b>Signer process compromised</b></td><td>Read-only container, all capabilities dropped, no core dumps, internal-only network, zeroized buffers.</td><td class="risk">Seed is briefly in RAM in this tier.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="crypto">
+  <div class="eyebrow">Cryptography</div>
+  <h2>How a seed is stored</h2>
+  <div class="two">
+    <div>
+      <p>At wallet creation the HSM generates a 64-byte seed with <code>C_GenerateRandom</code>. It is wrapped with <code>CKM_AES_GCM</code> under <code>kek-v1</code> using a fresh 12-byte IV, and the 92-byte result is stored in <code>app.wallets</code>.</p>
+      <div class="blob" aria-label="Wrapped seed layout, 92 bytes">
+        <div class="iv">IV<small>12 B</small></div>
+        <div class="ct">ciphertext<small>64 B · bytes 12–76</small></div>
+        <div class="tag">tag<small>16 B</small></div>
+      </div>
+    </div>
+    <div>
+      <p>The wrap is bound to its wallet by associated data. The signer builds it from the <em>verified request body</em>, so a blob copied from another wallet fails to decrypt.</p>
+      <div class="aad">w_01HZ8F3A<span class="sep">|</span>bip32<span class="sep">|</span>secp256k1<span class="sep">|</span>1<span class="sep">|</span>kek-v1</div>
+      <p class="mono" style="color:var(--muted);font-size:0.8rem">wallet_id | scheme | curve | seed_version | kek_label</p>
+    </div>
+  </div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Scheme</th><th>Curve</th><th>Derivation</th><th>HSM mechanism</th><th>Public key</th></tr></thead>
+      <tbody>
+        <tr><td><b>BIP32</b></td><td class="mono">secp256k1</td><td>Hardened and non-hardened, depth ≤ 255</td><td class="mono">CKM_ECDSA</td><td>33-byte compressed</td></tr>
+        <tr><td><b>SLIP10</b></td><td class="mono">ed25519</td><td>Hardened only, depth ≤ 255</td><td class="mono">CKM_EDDSA</td><td>32-byte</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="col" style="color:var(--muted)">The signer refuses to start unless a startup probe passes: the PKCS#11 library loads, AES-GCM round-trips and rejects tampering, the KEK has the right attributes, published BIP32 and SLIP10 vectors match, and a throwaway session key signs and leaves no objects behind.</p>
+</section>
+
+<section id="derivation">
+  <div class="eyebrow">Derivation</div>
+  <h2>From one seed to a key on each chain</h2>
+  <p class="col lede">A wallet holds one 64-byte seed. Each chain's key is found by walking a path from that seed, one level at a time. Pick a chain to follow its path, using the paths from <code>make demo</code>.</p>
+  <div class="tabs" id="dv-tabs" role="tablist" aria-label="Chains"></div>
+  <div class="dv-head">
+    <span class="dv-path" id="dv-path"></span>
+    <span class="dv-scheme" id="dv-scheme"></span>
+  </div>
+  <div class="scroll"><div class="segs" id="dv-segs"></div></div>
+  <p class="dv-note" id="dv-wire"></p>
+  <ol class="pipe col" id="dv-pipe"></ol>
+  <p class="dv-note col" id="dv-note"></p>
+</section>
+
+<section id="chains">
+  <div class="eyebrow">Chains</div>
+  <h2>Five chains, decoded before signing</h2>
+  <p class="col lede">For raw transactions the signer decodes the bytes, checks network IDs, computes the signing input itself, and returns a summary in one shape (<code>transfers</code>, <code>fee</code>, <code>sequence</code>, <code>details</code>) so one policy engine can read every chain.</p>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Chain</th><th>Path</th><th>Accepted transactions</th><th>Signing input</th><th>In HSM</th></tr></thead>
+      <tbody>
+        <tr><td><b>Bitcoin</b></td><td class="mono">m/44' 49' 84' 86'</td><td>PSBT with P2PKH, P2SH-P2WPKH, P2WPKH or Taproot key-path inputs; one path per input</td><td>Legacy, BIP143, BIP341 sighash</td><td><span class="yes">ECDSA yes</span><br><span class="no">Taproot no</span></td></tr>
+        <tr><td><b>Ethereum & EVM</b></td><td class="mono">m/44'/60'</td><td>EIP-1559 and legacy EIP-155; ETH and ERC-20 transfers</td><td>Keccak-256 of unsigned RLP</td><td><span class="yes">yes</span></td></tr>
+        <tr><td><b>Solana</b></td><td class="mono">m/44'/501'</td><td>Legacy message of System Program transfers</td><td>Serialized message bytes</td><td><span class="yes">yes</span></td></tr>
+        <tr><td><b>Tron</b></td><td class="mono">m/44'/195'</td><td>TRX transfer or TRC-20 <code>transfer</code></td><td>SHA-256 of <code>raw_data</code></td><td><span class="yes">yes</span></td></tr>
+        <tr><td><b>XRP Ledger</b></td><td class="mono">m/44'/144'</td><td>Binary Payment (XRP or IOU)</td><td>SHA-512Half of <code>STX\0</code> + fields</td><td><span class="yes">yes</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="col" style="color:var(--muted)">Non-Taproot Bitcoin inputs must carry the full previous transaction, which the signer hashes against the prevout so amounts and fees can't be spoofed. Multisig, P2WSH and script-path spends are rejected. Raw digest or message signing is "blind" and gated behind <code>allow_digest_signing</code>, which is off in production.</p>
+</section>
+
+<section id="honesty">
+  <div class="eyebrow">Honest labelling</div>
+  <h2>Every response says how it was protected</h2>
+  <p class="col lede">Signed responses carry <code>protection_level</code>, <code>backend</code>, <code>signing_in_hsm</code> and <code>blind_sign</code>, so nobody mistakes a laptop demo for production custody.</p>
+  <div class="levels">
+    <div class="lvl now"><span class="mono">generic-dev</span><b>This prototype</b><span>SoftHSMv2, derivation in the signer.</span></div>
+    <div class="lvl"><span class="mono">generic-hsm</span><b>Real HSM</b><span>Hardware PKCS#11, derivation still in the signer.</span></div>
+    <div class="lvl"><span class="mono">native</span><b>Future</b><span>Derivation inside the HSM; the seed never reaches the signer.</span></div>
+  </div>
+  <h3 style="margin-top:12px">Limits of the generic tier</h3>
+  <ul class="limits col">
+    <li>SoftHSMv2 is software. It shows the exact PKCS#11 flow, not tamper resistance.</li>
+    <li>Standard PKCS#11 has no portable BIP32/SLIP10 derivation, so the seed is decrypted into zeroized signer memory for each request.</li>
+    <li>PKCS#11 has no BIP340 Schnorr mechanism, so Taproot inputs are signed in software and reported as <code>signing_in_hsm: false</code>.</li>
+    <li>Memory hygiene is best effort: zeroized buffers and no core dumps, checked by a heap-scanning test allocator.</li>
+    <li>There is no attestation that the running signer binary is the approved build.</li>
+  </ul>
+</section>
+
+<section id="api">
+  <div class="eyebrow">API</div>
+  <h2>Small REST surface</h2>
+  <div class="states" aria-label="Request states">
+    <span class="st">ready</span><span class="arr">→</span><span class="st">claimed</span><span class="arr">→</span><span class="st ok">completed</span>
+    <span class="arr" style="margin-left:12px">or</span><span class="st bad">failed</span><span class="st bad">expired</span>
+  </div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Method</th><th>Path</th><th>Role</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">GET</td><td class="mono">/v1/signer</td><td>any</td><td>Signer ID, identity public key, capabilities</td></tr>
+        <tr><td class="mono">POST</td><td class="mono">/v1/requests</td><td>client</td><td>Submit a signed envelope, returns 202</td></tr>
+        <tr><td class="mono">GET</td><td class="mono">/v1/requests/{id}</td><td>client</td><td>Status, and the signed result when done</td></tr>
+        <tr><td class="mono">GET</td><td class="mono">/v1/wallets[/{id}]</td><td>client</td><td>Wallet metadata, never the wrapped seed</td></tr>
+        <tr><td class="mono">POST</td><td class="mono">/internal/claim</td><td>signer</td><td>25 s long-poll for the next ready request</td></tr>
+        <tr><td class="mono">POST</td><td class="mono">/internal/results</td><td>signer</td><td>Post a signed result or failure reason</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="col" style="color:var(--muted)">Errors are RFC 9457 problem details with a stable <code>code</code> (<code>replayed</code>, <code>signer_rejected</code>, <code>request_expired</code>…) and, from the signer, a specific <code>reason</code> such as <code>bad_signature</code> or <code>unsupported_transaction</code>. Both audit logs are SHA-256 hash-chained and protected by triggers that block updates and deletes.</p>
+</section>
+
+<section id="secrets">
+  <div class="eyebrow">Secrets & credentials</div>
+  <h2>What the stack needs, and who holds it</h2>
+  <p class="col lede"><code>make bootstrap</code> creates every file under <code>./secrets</code> (mode 0600, gitignored) and Compose mounts each one as a Docker secret at <code>/run/secrets/&lt;name&gt;</code>. No secret goes into an environment variable, and services log database URLs with the password replaced by <code>***</code>. The most sensitive key, <code>kek-v1</code>, never exists as a file.</p>
+  <div class="tbl sec">
+    <table>
+      <thead><tr><th>Secret</th><th>What it unlocks</th><th>How it is made</th><th class="hold">host</th><th class="hold">bootstrap</th><th class="hold">api</th><th class="hold">signer</th><th class="hold">postgres</th></tr></thead>
+      <tbody>
+        <tr class="group"><td colspan="8">HSM</td></tr>
+        <tr><td><b>SoftHSM user PIN</b><span class="file">secrets/softhsm_user_pin</span></td><td>Logs in to the token to unwrap seeds and sign</td><td><code>SOFTHSM_USER_PIN</code>, or 16 random bytes, hex</td><td class="hold"><span class="dot"></span></td><td class="hold"><span class="dot"></span></td><td class="hold"></td><td class="hold"><span class="dot"></span></td><td class="hold"></td></tr>
+        <tr><td><b>SoftHSM SO PIN</b><span class="file">secrets/softhsm_so_pin</span></td><td>Initializes the token and can reset the user PIN</td><td><code>SOFTHSM_SO_PIN</code>, or 16 random bytes, hex</td><td class="hold"></td><td class="hold"><span class="dot"></span></td><td class="hold"></td><td class="hold"></td><td class="hold"></td></tr>
+        <tr><td><b>KEK <code>kek-v1</code></b><span class="file">inside the token · volume hsm-tokens</span></td><td>Wraps and unwraps every wallet seed</td><td>AES-256, created by bootstrap, non-extractable</td><td class="hold"></td><td class="hold"><span class="dot"></span></td><td class="hold"></td><td class="hold"><span class="dot"></span></td><td class="hold"></td></tr>
+        <tr class="group"><td colspan="8">Signer identity</td></tr>
+        <tr><td><b>Signer identity key</b><span class="file">hsm-tokens/signer_identity.key</span></td><td>Signs every response; clients verify it via <code>GET /v1/signer</code></td><td>Ed25519 from HSM randomness, written by bootstrap</td><td class="hold"></td><td class="hold"><span class="dot"></span></td><td class="hold"></td><td class="hold"><span class="dot"></span></td><td class="hold"></td></tr>
+        <tr class="group"><td colspan="8">Policy engine</td></tr>
+        <tr><td><b>Policy engine private keys</b><span class="file">secrets/pe/pe-dev-1.key · pe-dev-2.key</span></td><td>Authorizes operations. Whoever holds one can approve anything.</td><td><code>pe-sim keygen</code>: Ed25519 and ES256 (P-256)</td><td class="hold"><span class="dot"></span></td><td class="hold"></td><td class="hold"></td><td class="hold"></td><td class="hold"></td></tr>
+        <tr><td><b>Policy engine public keys</b><span class="file">deploy/signer.yaml (read-only mount)</span></td><td>The signer's trust anchors. Not secret, but must not be writable.</td><td>Copied from <code>secrets/pe/*.yaml</code></td><td class="hold"><span class="dot ro"></span></td><td class="hold"></td><td class="hold"></td><td class="hold"><span class="dot ro"></span></td><td class="hold"></td></tr>
+        <tr class="group"><td colspan="8">API bearer tokens</td></tr>
+        <tr><td><b>Client API key</b><span class="file">secrets/client_api_key</span></td><td>Calls <code>/v1/*</code> as role <code>client</code></td><td><code>client_sec_</code> + 24 random bytes; API stores only its SHA-256</td><td class="hold"><span class="dot"></span></td><td class="hold"></td><td class="hold"><span class="dot"></span></td><td class="hold"></td><td class="hold"></td></tr>
+        <tr><td><b>Signer token</b><span class="file">secrets/signer_token</span></td><td>Calls <code>/internal/claim</code> and <code>/internal/results</code></td><td><code>signer_sec_</code> + 24 random bytes; API stores only its SHA-256</td><td class="hold"></td><td class="hold"></td><td class="hold"><span class="dot"></span></td><td class="hold"><span class="dot"></span></td><td class="hold"></td></tr>
+        <tr class="group"><td colspan="8">Database</td></tr>
+        <tr><td><b>Admin password</b><span class="file">secrets/db_admin_password</span></td><td>The <code>postgres</code> superuser; runs migrations and sets role passwords</td><td>16 random bytes, hex</td><td class="hold"></td><td class="hold"></td><td class="hold"><span class="dot warn"></span></td><td class="hold"></td><td class="hold"><span class="dot"></span></td></tr>
+        <tr><td><b><code>api_role</code> password</b><span class="file">secrets/db_api_password</span></td><td>Read/write on <code>app.*</code>, nothing on <code>signer.*</code></td><td>16 random bytes, hex</td><td class="hold"></td><td class="hold"></td><td class="hold"><span class="dot"></span></td><td class="hold"></td><td class="hold"></td></tr>
+        <tr><td><b><code>signer_role</code> password</b><span class="file">secrets/db_signer_password</span></td><td>Replay table, stored results, signer audit log</td><td>16 random bytes, hex</td><td class="hold"></td><td class="hold"></td><td class="hold"><span class="dot warn"></span></td><td class="hold"><span class="dot"></span></td><td class="hold"></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="legend">
+    <span><i class="dot"></i>&nbsp; holds the secret</span>
+    <span><i class="dot ro"></i>&nbsp; holds a public value, read-only</span>
+    <span><i class="dot warn"></i>&nbsp; holds it only to set things up, see below</span>
+  </div>
+  <div class="callouts">
+    <div class="callout">
+      <h3>Certificates</h3>
+      <p>The prototype uses none. Every hop runs on plain HTTP or plain Postgres inside Docker networks: the signer reaches the API at <code>http://api:8081</code>, and both services connect to Postgres with TLS off. The backend network is <code>internal: true</code>, and integrity comes from signatures rather than transport: the policy engine signs requests and the signer signs responses.</p>
+      <p>The spec lists mTLS as the replacement for bearer tokens in a later phase. That will add a CA, a server certificate for the API and a client certificate for the signer and each client.</p>
+    </div>
+    <div class="callout warn">
+      <h3>Tighten before production</h3>
+      <ul>
+        <li>SoftHSM PINs are random per install, or set with <code>SOFTHSM_USER_PIN</code> and <code>SOFTHSM_SO_PIN</code>. With a real HSM, use its own credentials and keep the SO PIN off the signer host.</li>
+        <li>The API container receives the admin and <code>signer_role</code> passwords so it can run migrations and set role passwords. A compromised API could then log in as <code>signer_role</code>. Move migrations and role setup into a one-shot job and give the API only its own password.</li>
+        <li>Until the API sets them at first start, the migration creates both roles with default passwords.</li>
+        <li><code>secrets/pe/*.key</code> are written world-readable (0644). In production these keys live in the client's policy engine, never on this host.</li>
+        <li>The signer identity key is a file on the token volume. A native backend would keep it in the HSM.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="run">
+  <div class="eyebrow">Try it</div>
+  <h2>Run it on a laptop</h2>
+  <pre><span class="c"># secrets, policy-engine keys, SoftHSM token and kek-v1</span>
+make bootstrap
+<span class="c"># start api, signer, postgres</span>
+make up
+<span class="c"># 2 wallets, 5 chains signed and verified, replay and forgery rejected</span>
+make demo
+make down</pre>
+  <p class="col" style="color:var(--muted)">The demo pins the signer's identity key, signs one transfer each on Ethereum, Solana, Tron, XRPL and Bitcoin (P2WPKH plus Taproot), verifies every chain signature and the decoded summary, then confirms a replay gets <code>409</code> and a forged body gets <code>422 bad_signature</code>. <code>make test</code> runs 196 Rust tests, the Go suite, Python cross-checks over 2,000 random derivation paths and 500 JCS fuzz cases, and a 28-point database permission matrix.</p>
+</section>
+
+<section id="scope">
+  <div class="eyebrow">Scope</div>
+  <h2>What the prototype covers</h2>
+  <div class="scope">
+    <div><h3>In</h3><ul>
+      <li>Wallet creation with HSM-generated, AEAD-wrapped seeds</li>
+      <li>Full-path derivation for BIP32 and SLIP10</li>
+      <li>Public key derivation, digest signing, raw transaction signing</li>
+      <li>Session-object signing in the HSM with flagged software fallback</li>
+      <li>Policy-engine authorization, replay protection, signed responses</li>
+      <li>Vendor conformance suite against the <code>Backend</code> trait</li>
+    </ul></div>
+    <div><h3>Out, for now</h3><ul>
+      <li>Approvals, quorum and business rules (the policy engine's job)</li>
+      <li>Native-derive backends: IBM, Thales, Utimaco, Fortanix</li>
+      <li>TEEs, attestation, high availability, UI</li>
+      <li>Seed import, key rotation, BLS signatures</li>
+      <li>Bitcoin multisig and script-path; Cardano, Polkadot</li>
+    </ul></div>
+  </div>
+</section>
+
+<footer>Summarised from the Polyglot README and prototype spec (Oct 16, 2026).</footer>
+</div>
+
+<script>
+const STEPS = [
+  ["Strict parse and canonical check", "Unknown fields rejected, v == 1, bytes must be exact RFC 8785"],
+  ["Audience", "body.audience equals this signer's ID"],
+  ["Expiry", "Not expired, lifetime ≤ 600 s, clock skew ≤ 30 s"],
+  ["Policy engine signature", "Pinned kid, valid window, pinned alg, signature verifies"],
+  ["Replay barrier", "Return cached result, else insert request_id + nonce into signer.replay"],
+  ["Derivation path", "Depth ≤ 255; ed25519 hardened only"],
+  ["Payload and chain codec", "Decode tx, check chain ID and prevouts, build sighash; digests need the switch"],
+  ["AEAD seed unwrap", "AAD built from the verified body; C_Decrypt under kek-v1"],
+  ["Derive, sign, wipe, persist", "Session key signs in HSM then is destroyed; response signed and stored"]
+];
+const ATTACKS = [
+  { label: "Legitimate request", at: 0, msg: "All nine checks pass. One signature, a signed response, and a stored result for retries." },
+  { label: "API forges a request", at: 4, reason: "bad_signature", msg: "The API has no policy-engine key, so the signature over the body cannot verify." },
+  { label: "API edits the path after approval", at: 4, reason: "bad_signature", msg: "The policy engine signed the original bytes. Any edit to the body breaks the signature." },
+  { label: "Replay an approved request", at: 5, reason: "replayed (409)", msg: "request_id is already in signer.replay. The API role cannot delete it." },
+  { label: "Swap wrapped seed in the DB", at: 8, reason: "AEAD tag failure", msg: "AAD comes from the signed wallet_id, so a blob from another wallet fails GCM authentication." },
+  { label: "Re-encode the JSON body", at: 1, reason: "non_canonical_body", msg: "Bytes that are not exact canonical JSON are rejected before anything else is read." },
+  { label: "Send to another signer", at: 2, reason: "audience_mismatch", msg: "The body names the signer it was approved for." },
+  { label: "Submit an expired approval", at: 3, reason: "request_expired", msg: "Approvals live at most ten minutes." },
+  { label: "Sign with an unpinned key", at: 4, reason: "unknown_kid", msg: "Trusted keys are only in the read-only signer.yaml, not in the database." },
+  { label: "Non-hardened ed25519 path", at: 6, reason: "invalid path", msg: "SLIP10 ed25519 only allows hardened indices." },
+  { label: "Mainnet tx with a testnet chain ID", at: 7, reason: "chain mismatch", msg: "The chain ID inside the transaction must match the signed chain field." },
+  { label: "Blind digest in production", at: 7, reason: "digest_signing_disabled", msg: "allow_digest_signing is off in the production profile." }
+];
+const stepsEl = document.getElementById("steps"), atkEl = document.getElementById("attacks"), vEl = document.getElementById("verdict");
+STEPS.forEach((s, i) => {
+  const li = document.createElement("li");
+  li.innerHTML = `<span class="n">${i + 1}</span><div class="s-body"><b>${s[0]}</b><span>${s[1]}</span></div><span class="badge"></span>`;
+  stepsEl.appendChild(li);
+});
+function pick(idx) {
+  const a = ATTACKS[idx];
+  [...atkEl.children].forEach((b, i) => b.setAttribute("aria-pressed", i === idx));
+  [...stepsEl.children].forEach((li, i) => {
+    const n = i + 1, badge = li.querySelector(".badge");
+    li.className = "";
+    if (a.at === 0 || n < a.at) { li.classList.add("pass"); badge.textContent = "pass"; }
+    else if (n === a.at) { li.classList.add("fail"); badge.textContent = "rejected"; }
+    else { li.classList.add("skip"); badge.textContent = ""; }
+  });
+  vEl.innerHTML = a.at === 0
+    ? `<b>Signed.</b> ${a.msg}`
+    : `<b>Stopped at step ${a.at}</b> · <span class="mono">${a.reason}</span>. ${a.msg} No signature is produced.`;
+}
+ATTACKS.forEach((a, i) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.id = "atk-" + i; b.textContent = a.label;
+  b.addEventListener("click", () => pick(i));
+  atkEl.appendChild(b);
+});
+pick(1);
+
+/* derivation explorer */
+const H = 0x80000000;
+const LEVEL = ["purpose", "coin type", "account", "change", "address index"];
+const CHAINS = {
+  eth: {
+    name: "Ethereum & EVM", scheme: "bip32", curve: "secp256k1", path: [[44,1],[60,1],[0,1],[0,0],[0,0]],
+    purposeNote: "BIP44", coinNote: "Ether (SLIP-44 60)",
+    pub: "33-byte compressed secp256k1 public key",
+    addr: ["Decompress to 64 bytes (x‖y), hash with Keccak-256, keep the last 20 bytes, write as 0x… with an EIP-55 checksum.", "keccak256(X‖Y)[12..32] → 0x742d35Cc…"],
+    sign: "Keccak-256 of the unsigned RLP, ECDSA in the HSM, low-S, recovery ID found by trying both parities.",
+    note: "The same key and address work on every EVM network (Polygon, BNB Chain, Arbitrum…). The chain ID inside the transaction is what tells them apart, and the signer checks it against the signed chain field."
+  },
+  sol: {
+    name: "Solana", scheme: "slip10", curve: "ed25519", path: [[44,1],[501,1],[0,1],[0,1]],
+    purposeNote: "BIP44", coinNote: "SOL (SLIP-44 501)",
+    pub: "32-byte Ed25519 public key, computed from the 32-byte child key",
+    addr: ["The public key is the address, written in Base58.", "base58(pubkey) → 7EcDhSYG…"],
+    sign: "The serialized message bytes are signed directly with Ed25519 in the HSM (CKM_EDDSA).",
+    note: "SLIP10 on ed25519 only defines hardened children, so every level carries ' and the path is four levels deep. A non-hardened index is rejected at step 6."
+  },
+  trx: {
+    name: "Tron", scheme: "bip32", curve: "secp256k1", path: [[44,1],[195,1],[0,1],[0,0],[0,0]],
+    purposeNote: "BIP44", coinNote: "TRX (SLIP-44 195)",
+    pub: "33-byte compressed secp256k1 public key",
+    addr: ["Same 20-byte Keccak hash as Ethereum, prefixed with 0x41, then Base58Check.", "base58check(0x41 ‖ keccak256(X‖Y)[12..32]) → T…"],
+    sign: "SHA-256 of the protobuf raw_data, ECDSA in the HSM, returned as 65-byte r‖s‖v.",
+    note: "Tron reuses Ethereum's key and hash shape. Only the coin type (195) and the address encoding differ."
+  },
+  xrp: {
+    name: "XRP Ledger", scheme: "bip32", curve: "secp256k1", path: [[44,1],[144,1],[0,1],[0,0],[0,0]],
+    purposeNote: "BIP44", coinNote: "XRP (SLIP-44 144)",
+    pub: "33-byte compressed secp256k1 public key",
+    addr: ["RIPEMD-160 of SHA-256 of the compressed key, prefixed with 0x00, Base58Check in the XRPL alphabet.", "base58check_xrpl(0x00 ‖ ripemd160(sha256(K))) → r…"],
+    sign: "SHA-512Half over the STX\\0 prefix and signing fields, ECDSA in the HSM, returned as low-S DER.",
+    note: "XRPL also supports ed25519 accounts, but Polyglot v1 uses secp256k1 under BIP32 for XRP."
+  },
+  btc: {
+    name: "Bitcoin (Taproot)", scheme: "bip32", curve: "secp256k1", path: [[86,1],[0,1],[0,1],[0,0],[0,0]],
+    purposeNote: "BIP86 key-path", coinNote: "Bitcoin mainnet (0)",
+    pub: "33-byte compressed key P; Taproot uses its 32-byte x-only form",
+    addr: ["Tweak the key per BIP86: Q = P + H_TapTweak(P)·G. Encode Q's x-coordinate as a SegWit v1 Bech32m address.", "bech32m(\"bc\", 1, x(Q)) → bc1p…"],
+    sign: "BIP341 sighash, BIP340 Schnorr with the tweaked key. Signed in software, reported as signing_in_hsm: false.",
+    note: "The purpose level picks the input type: m/44' for P2PKH, m/49' for P2SH-P2WPKH, m/84' for P2WPKH (bc1q…, hash160 of the key), m/86' for Taproot. A PSBT carries input_paths, one path per input, so one request can sign inputs under several of these at once."
+  }
+};
+const tabsEl = document.getElementById("dv-tabs");
+function fmtPath(p) { return "m/" + p.map(([i, h]) => i + (h ? "'" : "")).join("/"); }
+function showChain(key) {
+  const c = CHAINS[key];
+  [...tabsEl.children].forEach(b => b.setAttribute("aria-selected", b.dataset.k === key));
+  document.getElementById("dv-path").textContent = fmtPath(c.path);
+  document.getElementById("dv-scheme").textContent = `${c.scheme.toUpperCase()} · ${c.curve} · depth ${c.path.length}`;
+  const notes = [c.purposeNote, c.coinNote, "first account", "0 = receive", "first address"];
+  document.getElementById("dv-segs").innerHTML =
+    `<div class="seg root"><span class="v">m</span><span class="m">master</span><span class="u">from seed</span></div>` +
+    c.path.map(([i, h], n) =>
+      `<div class="seg${h ? " h" : ""}"><span class="hb">${h ? "hardened" : "normal"}</span><span class="v">${i}${h ? "'" : ""}</span><span class="m">${LEVEL[n]} · ${notes[n]}</span><span class="u">${(h ? i + H : i).toString()}</span></div>`
+    ).join("") +
+    (c.path.length < 5 ? `<div class="seg" style="opacity:.45"><span class="hb">none</span><span class="v">–</span><span class="m">no fifth level on Solana</span></div>` : "");
+  document.getElementById("dv-wire").innerHTML = `Sent in the signed body as <code>"path": [${c.path.map(([i, h]) => h ? i + H : i).join(", ")}]</code>. Hardened indices add 0x80000000.`;
+
+  const bip = c.scheme === "bip32";
+  const master = bip
+    ? ["Master key", "HMAC-SHA512 with the key \"Bitcoin seed\". The left 32 bytes are the master private key, the right 32 the chain code.", "I = HMAC-SHA512(\"Bitcoin seed\", seed) → k_m = I_L, c_m = I_R"]
+    : ["Master key", "HMAC-SHA512 with the key \"ed25519 seed\". The left 32 bytes are the master private key, the right 32 the chain code.", "I = HMAC-SHA512(\"ed25519 seed\", seed) → k_m = I_L, c_m = I_R"];
+  const hasNormal = c.path.some(([, h]) => !h);
+  const child = bip
+    ? ["Walk each level", `Each step hashes the parent chain code with the index. ${hasNormal ? "Hardened levels hash the parent private key; normal levels hash the parent public key." : ""} The result is added to the parent key modulo the curve order. An invalid child fails the request and names the index.`,
+       "hardened: HMAC-SHA512(c, 0x00‖k‖i)   normal: HMAC-SHA512(c, K‖i)   k_child = I_L + k (mod n)"]
+    : ["Walk each level", "Each step hashes the parent chain code with 0x00, the parent private key and the hardened index. The left half becomes the child key directly, with no addition.",
+       "HMAC-SHA512(c, 0x00‖k‖i)   k_child = I_L, c_child = I_R"];
+  const steps = [
+    ["t", "Unwrap seed", "The HSM decrypts the 92-byte blob with C_Decrypt, using AAD rebuilt from the signed body. The 64-byte seed lands in a zeroized buffer in signer memory.", "AES-256-GCM(kek-v1, AAD = wallet_id|" + c.scheme + "|" + c.curve + "|1|kek-v1)"],
+    ["t", ...master],
+    ["t", `${child[0]} (${c.path.length} times)`, child[1], child[2]],
+    ["t", "Child key", c.pub + ". The chain code is wiped and never returned.", ""],
+    ["c", "Chain address", c.addr[0], c.addr[1]],
+    ["t", "Sign", "The child private key is loaded into the HSM as a session object, used once and destroyed. " + c.sign, ""]
+  ];
+  const label = { t: "signer", c: "chain rule" };
+  document.getElementById("dv-pipe").innerHTML = steps.map(([w, t, d, f]) =>
+    `<li><span class="where ${w}">${label[w]}</span><div><b>${t}</b><br>${d}${f ? `<span class="f">${f}</span>` : ""}</div></li>`
+  ).join("");
+  document.getElementById("dv-note").textContent = c.note;
+}
+Object.entries(CHAINS).forEach(([k, c]) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.role = "tab"; b.id = "dv-" + k; b.dataset.k = k; b.textContent = c.name;
+  b.addEventListener("click", () => showChain(k));
+  tabsEl.appendChild(b);
+});
+showChain("eth");
+</script>

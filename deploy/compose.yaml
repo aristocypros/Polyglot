@@ -1,0 +1,164 @@
+name: polyglot
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_admin_password
+    secrets:
+      - db_admin_password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+    security_opt:
+      - no-new-privileges:true
+    ulimits:
+      core: 0
+    mem_limit: 512m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+      start_period: 3s
+
+  bootstrap:
+    build:
+      context: ..
+      dockerfile: signer/Dockerfile
+      target: runtime
+    image: polyglot-signer:latest
+    restart: "no"
+    command: ["/usr/local/bin/bootstrap"]
+    volumes:
+      - hsm-tokens:/var/lib/softhsm/tokens
+    secrets:
+      - softhsm_user_pin
+      - softhsm_so_pin
+    environment:
+      PKCS11_SO_PIN_FILE: "/run/secrets/softhsm_so_pin"
+    networks:
+      - backend
+    user: "10001:10001"
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    ulimits:
+      core: 0
+    mem_limit: 512m
+
+  api:
+    build:
+      context: ..
+      dockerfile: api/Dockerfile
+    image: polyglot-api:latest
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      bootstrap:
+        condition: service_completed_successfully
+    ports:
+      - "127.0.0.1:8080:8080"
+    networks:
+      - front
+      - backend
+    secrets:
+      - db_admin_password
+      - db_api_password
+      - db_signer_password
+      - client_api_key
+      - signer_token
+    environment:
+      PUBLIC_ADDR: ":8080"
+      INTERNAL_ADDR: ":8081"
+      POSTGRES_HOST: "postgres"
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: "postgres"
+      MIGRATIONS_PATH: "file:///app/migrations"
+    user: "65532:65532"
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    ulimits:
+      core: 0
+    mem_limit: 512m
+
+  signer:
+    build:
+      context: ..
+      dockerfile: signer/Dockerfile
+      target: runtime
+    image: polyglot-signer:latest
+    restart: unless-stopped
+    depends_on:
+      bootstrap:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+      api:
+        condition: service_started
+    networks:
+      - backend
+    volumes:
+      - hsm-tokens:/var/lib/softhsm/tokens
+      - ./signer.yaml:/etc/polyglot/signer.yaml:ro
+    secrets:
+      - softhsm_user_pin
+      - signer_token
+      - db_signer_password
+    environment:
+      API_URL: "http://api:8081"
+      SIGNER_CONFIG_PATH: "/etc/polyglot/signer.yaml"
+      SIGNER_TOKEN_FILE: "/run/secrets/signer_token"
+      PKCS11_PIN_FILE: "/run/secrets/softhsm_user_pin"
+      SIGNER_IDENTITY_KEY_PATH: "/var/lib/softhsm/tokens/signer_identity.key"
+    user: "10001:10001"
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    ulimits:
+      core: 0
+    mem_limit: 512m
+
+networks:
+  front:
+    internal: false
+  backend:
+    internal: true
+
+volumes:
+  pgdata:
+  hsm-tokens:
+
+secrets:
+  softhsm_user_pin:
+    file: ../secrets/softhsm_user_pin
+  softhsm_so_pin:
+    file: ../secrets/softhsm_so_pin
+  db_admin_password:
+    file: ../secrets/db_admin_password
+  db_api_password:
+    file: ../secrets/db_api_password
+  db_signer_password:
+    file: ../secrets/db_signer_password
+  client_api_key:
+    file: ../secrets/client_api_key
+  signer_token:
+    file: ../secrets/signer_token
