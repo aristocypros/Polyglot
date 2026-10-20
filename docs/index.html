@@ -1,3 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Polyglot: a zero-trust multi-chain HD wallet signing middleware. Architecture, verification checklist, key derivation per chain, secrets and API.">
+<style>
+:root { color-scheme: light; }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
 <title>Polyglot Signing Middleware</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -217,7 +229,8 @@ pre .c { color: var(--muted); }
 .callout ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-size: 0.93rem; }
 footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--line); padding-top: 16px; }
 </style>
-
+</head>
+<body>
 <div class="wrap">
 
 <header>
@@ -711,3 +724,5 @@ Object.entries(CHAINS).forEach(([k, c]) => {
 });
 showChain("eth");
 </script>
+</body>
+</html>

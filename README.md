@@ -4,7 +4,7 @@ Polyglot is a vendor-neutral, multi-chain Hierarchical Deterministic (HD) wallet
 
 Even a completely compromised API gateway or database cannot forge a signature, swap seeds across wallets, replay an old authorization, or extract a master seed.
 
-For a visual walkthrough (architecture, the verification checklist under attack, per-chain key derivation, and every secret the stack needs), open [`polyglot-explainer.html`](polyglot-explainer.html) in a browser.
+For a visual walkthrough (architecture, the verification checklist under attack, per-chain key derivation, and every secret the stack needs), see the **[Polyglot explainer](https://aristocypros.github.io/Polyglot/)** (source: [`docs/index.html`](docs/index.html), served by GitHub Pages).
 
 ---
 
@@ -712,6 +712,7 @@ cargo test --manifest-path signer/Cargo.toml --test conformance -- --nocapture
 ├── vectors/                    # Published & shared test vectors (bip32, slip10, jcs, tx_*)
 ├── migrations/                 # SQL migrations (app & signer schemas, roles, immutable audit triggers)
 ├── deploy/                     # Hardened Docker Compose (compose.yaml) & read-only signer.yaml
-└── dev/                        # Bootstrap, demo, migration tests & Python cross-check scripts
+├── dev/                        # Bootstrap, demo, migration tests & Python cross-check scripts
+└── docs/                       # GitHub Pages site: index.html explainer page
 ```
 
